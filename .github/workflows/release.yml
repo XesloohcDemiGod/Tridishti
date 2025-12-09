@@ -16,7 +16,6 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: '20.x'
-        registry-url: 'https://registry.npmjs.org'
 
     - name: Install dependencies
       run: npm ci
@@ -28,48 +27,16 @@ jobs:
       run: npm test -- --watchAll=false
 
     - name: Package extension
-      run: npx @vscode/vsce package --no-dependencies
+      run: npm run package
 
     - name: Publish to VS Code Marketplace
       run: npx @vscode/vsce publish --pat ${{ secrets.VSCE_PAT }}
       env:
         VSCE_PAT: ${{ secrets.VSCE_PAT }}
 
-    - name: Create GitHub release with artifact
-      uses: actions/upload-release-asset@v1
+    - name: Upload release asset
+      uses: softprops/action-gh-release@v1
+      with:
+        files: "*.vsix"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ github.event.release.upload_url }}
-        asset_path: ./*.vsix
-        asset_name: tridishti-${{ github.event.release.tag_name }}.vsix
-        asset_content_type: application/zip
-
-  update-changelog:
-    runs-on: ubuntu-latest
-    if: github.event_name == 'release'
-
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-
-    - name: Update CHANGELOG.md
-      run: |
-        # Extract version from tag
-        VERSION=${GITHUB_REF#refs/tags/v}
-        DATE=$(date +%Y-%m-%d)
-
-        # Update CHANGELOG.md with new version
-        sed -i "1a ## [$VERSION] - $DATE\n\n### Added\n- Release $VERSION\n" CHANGELOG.md
-
-    - name: Commit updated CHANGELOG
-      run: |
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
-        git add CHANGELOG.md
-        git commit -m "docs: update CHANGELOG for v${GITHUB_REF#refs/tags/v}" || echo "No changes to commit"
-
-    - name: Push changes
-      uses: ad-m/github-push-action@master
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}

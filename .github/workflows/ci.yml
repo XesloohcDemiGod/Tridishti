@@ -45,10 +45,10 @@ jobs:
         file: ./__coverage__/lcov.info
         fail_ci_if_error: false
 
-  publish:
+  package:
     runs-on: ubuntu-latest
     needs: test
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    if: github.ref == 'refs/heads/main'
 
     steps:
     - name: Checkout code
@@ -58,7 +58,6 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: '20.x'
-        registry-url: 'https://registry.npmjs.org'
 
     - name: Install dependencies
       run: npm ci
@@ -67,16 +66,35 @@ jobs:
       run: npm run compile
 
     - name: Package extension
-      run: npx @vscode/vsce package --no-dependencies
+      run: npm run package
+
+    - name: Upload extension artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: tridishti-extension-${{ github.sha }}
+        path: "*.vsix"
+        retention-days: 30
+
+  publish:
+    runs-on: ubuntu-latest
+    needs: package
+    if: github.event_name == 'release'
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+
+    - name: Download extension artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: tridishti-extension-${{ github.sha }}
 
     - name: Publish to VS Code Marketplace
-      if: github.event_name == 'release'
       run: npx @vscode/vsce publish --pat ${{ secrets.VSCE_PAT }}
       env:
         VSCE_PAT: ${{ secrets.VSCE_PAT }}
-
-    - name: Upload extension artifact
-      uses: actions/upload-artifact@v3
-      with:
-        name: tridishti-extension
-        path: "*.vsix"
