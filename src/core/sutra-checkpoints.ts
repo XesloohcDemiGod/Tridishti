@@ -138,7 +138,9 @@ export class SutraCheckpoints {
   private async createGitCommit(message: string): Promise<string | undefined> {
     try {
       const { execSync } = await import('child_process');
-      const result = execSync(`git commit -am "${message}"`, { encoding: 'utf-8' });
+      // Sanitize message to prevent command injection
+      const sanitizedMessage = message.replace(/"/g, '\\"').replace(/`/g, '\\`').replace(/\$/g, '\\$');
+      const result = execSync(`git commit -am "${sanitizedMessage}"`, { encoding: 'utf-8' });
       const match = result.match(/\[([a-f0-9]+)\]/);
       return match ? match[1] : undefined;
     } catch (error) {

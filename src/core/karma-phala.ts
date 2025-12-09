@@ -218,11 +218,16 @@ export class KarmaPhala {
   private async createGitTag(name: string, score: number): Promise<string | undefined> {
     try {
       const { execSync } = await import('child_process');
-      const tagName = `milestone-${name.toLowerCase().replace(/\s+/g, '-')}-${score}`;
-      execSync(`git tag -a "${tagName}" -m "Milestone: ${name} (Score: ${score})"`, {
+      // Sanitize name to prevent command injection and create safe tag name
+      const sanitizedName = name.replace(/[^a-zA-Z0-9\s\-_]/g, '').substring(0, 50);
+      const tagName = `milestone-${sanitizedName.toLowerCase().replace(/\s+/g, '-')}-${score}`;
+      const sanitizedTagName = tagName.replace(/"/g, '').replace(/`/g, '').replace(/\$/g, '');
+      const sanitizedDisplayName = sanitizedName.replace(/"/g, '\\"').replace(/`/g, '\\`').replace(/\$/g, '\\$');
+
+      execSync(`git tag -a "${sanitizedTagName}" -m "Milestone: ${sanitizedDisplayName} (Score: ${score})"`, {
         encoding: 'utf-8',
       });
-      return tagName;
+      return sanitizedTagName;
     } catch (error) {
       return undefined;
     }
