@@ -72,7 +72,7 @@ export interface IYatra {
  * Event emitted by core modules
  */
 export interface ICoreEvent {
-  type: 'checkpoint' | 'milestone' | 'dharma_alert' | 'yatra_start' | 'yatra_end';
+  type: 'checkpoint' | 'milestone' | 'milestone_created' | 'dharma_alert' | 'yatra_start' | 'yatra_end';
   timestamp: number;
-  data: ISutraCheckpoint | IKarmaPhala | IDharmaSankata | IYatra;
+  data: ISutraCheckpoint | IKarmaPhala | IMilestone | IDharmaSankata | IYatra;
 }

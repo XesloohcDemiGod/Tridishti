@@ -41,10 +41,21 @@ const mockVSCode = {
   commands: {
     registerCommand: jest.fn(() => ({ dispose: jest.fn() })),
   },
-  EventEmitter: jest.fn(() => ({
-    event: jest.fn(() => ({ dispose: jest.fn() })),
-    fire: jest.fn(),
-  })),
+  EventEmitter: jest.fn(() => {
+    const listeners: ((event: any) => void)[] = [];
+    return {
+      event: jest.fn((callback: (event: any) => void) => {
+        listeners.push(callback);
+        return { dispose: jest.fn(() => {
+          const index = listeners.indexOf(callback);
+          if (index > -1) listeners.splice(index, 1);
+        })};
+      }),
+      fire: jest.fn((event: any) => {
+        listeners.forEach(listener => listener(event));
+      }),
+    };
+  }),
   Memento: jest.fn(() => ({
     get: jest.fn(),
     update: jest.fn(),

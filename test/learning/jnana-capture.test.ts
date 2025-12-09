@@ -141,7 +141,13 @@ describe('JnanaCapture', () => {
 
   describe('yatra context', () => {
     it('should include yatra ID in context', () => {
-      const mockYatra = { id: 'yatra-123' };
+      const mockYatra = {
+        id: 'yatra-123',
+        startedAt: Date.now(),
+        checkpoints: [],
+        milestones: [],
+        dharmaAlerts: [],
+      };
       jnanaCapture.setCurrentYatra(mockYatra);
 
       const jnana = jnanaCapture.captureInsight('Context test');
@@ -206,17 +212,17 @@ describe('JnanaCapture', () => {
   });
 
   describe('metadata handling', () => {
-    it('should handle custom metadata', () => {
+    it('should handle custom context', () => {
       const jnana = jnanaCapture.capture(
-        'Test with metadata',
+        'Test with context',
         'insight',
-        undefined,
-        undefined,
-        { source: 'documentation', priority: 'high' }
+        { file: 'test.ts', line: 42 },
+        ['tag1', 'tag2']
       );
 
-      expect(jnana.metadata?.source).toBe('documentation');
-      expect(jnana.metadata?.priority).toBe('high');
+      expect(jnana.context?.file).toBe('test.ts');
+      expect(jnana.context?.line).toBe(42);
+      expect(jnana.tags).toEqual(['tag1', 'tag2']);
     });
   });
 

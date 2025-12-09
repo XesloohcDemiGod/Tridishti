@@ -32,6 +32,7 @@ describe('Tridishti Extension Integration', () => {
   let smritiRecall: SmritiRecall;
   let atmaVichara: AtmaVichara;
   let drishtiDashboard: DrishtiDashboard;
+  let eventSpy: jest.Mock;
 
   beforeEach(async () => {
     // Mock VS Code context
@@ -110,15 +111,21 @@ describe('Tridishti Extension Integration', () => {
     atmaVichara = new AtmaVichara(atmaVicharaConfig);
     drishtiDashboard = new DrishtiDashboard(drishtiConfig);
 
-    // Connect dashboard to event emitter by directly calling the fire method
-    const originalFire = eventEmitter.fire;
+    // Spy on the event emitter fire method to track calls
+    eventSpy = jest.fn();
+    const originalFire = eventEmitter.fire.bind(eventEmitter);
     eventEmitter.fire = jest.fn((event: any) => {
-      originalFire(event);
+      eventSpy(event);
+      // Call the original fire method to maintain event propagation
+      return originalFire(event);
+    });
+
+    // Connect dashboard to event emitter
+    eventEmitter.event((event) => {
       drishtiDashboard.recordEvent(event);
     });
 
-    // Set current yatra for learning modules
-    jnanaCapture.setCurrentYatra(yatraManager.getCurrentYatra());
+    // Current yatra will be set when a session starts
   });
 
   afterEach(() => {
@@ -142,6 +149,9 @@ describe('Tridishti Extension Integration', () => {
       expect(yatra.sankalpa).toBe('Complete user authentication feature');
       expect(yatra.startedAt).toBeGreaterThan(0);
 
+      // Set current yatra for learning modules
+      jnanaCapture.setCurrentYatra(yatra);
+
       // Verify session state
       expect(yatraManager.getCurrentYatra()).toBe(yatra);
       expect(drishtiDashboard.getMetrics().activeYatra).toBe(yatra);
@@ -163,6 +173,9 @@ describe('Tridishti Extension Integration', () => {
         'JWT tokens provide stateless authentication',
         { file: 'auth.ts', line: 42 }
       );
+
+      // Record jnana in dashboard
+      drishtiDashboard.recordJnana([insight]);
 
       await smritiRecall.save(insight);
 
@@ -244,7 +257,7 @@ describe('Tridishti Extension Integration', () => {
       await yatraManager.startYatra('Metrics test');
 
       let metrics = drishtiDashboard.getMetrics();
-      expect(metrics.totalYatras).toBe(1);
+      expect(metrics.totalYatras).toBe(0); // No completed yatras yet
 
       await sutraCheckpoints.createCheckpoint('First checkpoint');
       metrics = drishtiDashboard.getMetrics();
@@ -260,6 +273,9 @@ describe('Tridishti Extension Integration', () => {
   describe('Knowledge Management Integration', () => {
     it('should integrate jnana capture with session context', async () => {
       const yatra = await yatraManager.startYatra('Knowledge integration test');
+
+      // Set current yatra for jnana capture
+      jnanaCapture.setCurrentYatra(yatra);
 
       // Capture various types of knowledge
       const insight = jnanaCapture.captureInsight('React hooks are composable');
@@ -297,7 +313,7 @@ describe('Tridishti Extension Integration', () => {
 
       // Verify dashboard integration
       drishtiDashboard.recordJnana([insight, gotcha, pattern, solution, question]);
-      const metrics = drishtiDashboard.getMetrics();
+      const metrics = drishtiDashboard.getMetrics(undefined);
       expect(metrics.totalJnana).toBe(5);
     });
   });

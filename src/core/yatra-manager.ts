@@ -13,10 +13,10 @@
  */
 
 import * as vscode from 'vscode';
-import { IYatra, ICoreEvent, ISutraCheckpoint, IDharmaSankata } from './types';
-import { SutraCheckpoints } from './sutra-checkpoints';
-import { KarmaPhala } from './karma-phala';
 import { DharmaSankata } from './dharma-sankata';
+import { KarmaPhala } from './karma-phala';
+import { SutraCheckpoints } from './sutra-checkpoints';
+import { ICoreEvent, IDharmaSankata, IMilestone, ISutraCheckpoint, IYatra } from './types';
 
 /**
  * Configuration for yatra manager
@@ -221,8 +221,11 @@ export class YatraManager {
       case 'checkpoint':
         this.currentYatra.checkpoints.push(event.data as ISutraCheckpoint);
         break;
+      case 'milestone_created':
+        this.currentYatra.milestones.push(event.data as IMilestone);
+        break;
       case 'milestone':
-        // Milestones are already tracked in karma phala
+        // Milestone completion - could update milestone status here if needed
         break;
       case 'dharma_alert':
         this.currentYatra.dharmaAlerts.push(event.data as IDharmaSankata);

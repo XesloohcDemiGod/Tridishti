@@ -12,7 +12,7 @@
  */
 
 import * as vscode from 'vscode';
-import { IKarmaPhala, IMilestone, ICoreEvent } from './types';
+import { ICoreEvent, IKarmaPhala, IMilestone } from './types';
 
 /**
  * Configuration for karma phala milestones
@@ -63,6 +63,13 @@ export class KarmaPhala {
     this.milestones.set(milestone.id, milestone);
     this.activeMilestone = milestone;
     this.milestoneStartTime = Date.now();
+
+    // Fire event for milestone creation
+    this.eventEmitter.fire({
+      type: 'milestone_created',
+      timestamp: Date.now(),
+      data: milestone,
+    });
 
     return milestone;
   }
