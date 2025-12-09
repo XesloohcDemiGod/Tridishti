@@ -57,8 +57,8 @@
       "<rootDir>/test"
     ],
     "testMatch": [
-      "**/__tests__/**/*.+(ts|tsx|js)",
-      "**/*.(test|spec).+(ts|tsx|js)"
+      "**/__tests__/**/*.+(ts|tsx)",
+      "**/*.(test|spec).+(ts|tsx)"
     ],
     "transform": {
       "^.+\\.(ts|tsx)$": [
