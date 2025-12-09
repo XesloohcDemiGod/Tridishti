@@ -1,118 +1,160 @@
 # Tridishti 👁️👁️👁️
 
-> Code with threefold vision — knowledge, action, reflection
+> **Code with threefold vision — knowledge, action, reflection**
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue.svg)](https://www.typescriptlang.org/)
-[![VS Code](https://img.shields.io/badge/VS_Code-1.80+-blue.svg)](https://code.visualstudio.com/)
-[![Node.js](https://img.shields.io/badge/Node.js-18+-green.svg)](https://nodejs.org/)
-[![Jest](https://img.shields.io/badge/Jest-tested-green.svg)](https://jestjs.io/)
-[![CI](https://github.com/XesloohcDemiGod/Tridishti/actions/workflows/ci.yml/badge.svg)](https://github.com/XesloohcDemiGod/Tridishti/actions)
-[![codecov](https://codecov.io/gh/XesloohcDemiGod/Tridishti/branch/main/graph/badge.svg)](https://codecov.io/gh/XesloohcDemiGod/Tridishti)
-[![GitHub issues](https://img.shields.io/github/issues/XesloohcDemiGod/Tridishti.svg)](https://github.com/XesloohcDemiGod/Tridishti/issues)
-[![GitHub stars](https://img.shields.io/github/stars/XesloohcDemiGod/Tridishti.svg)](https://github.com/XesloohcDemiGod/Tridishti/stargazers)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue.svg)](https://www.typescriptlang.org/) [![VS Code](https://img.shields.io/badge/VS%20Code-1.80%2B-blue.svg)](https://code.visualstudio.com/) [![Node.js](https://img.shields.io/badge/Node.js-18%2B-green.svg)](https://nodejs.org/) [![Jest](https://img.shields.io/badge/Jest-tested-brightgreen.svg)](https://jestjs.io/) [![codecov](https://codecov.io/gh/XesloohcDemiGod/Tridishti/branch/main/graph/badge.svg)](https://codecov.io/gh/XesloohcDemiGod/Tridishti) [![GitHub issues](https://img.shields.io/github/issues/XesloohcDemiGod/Tridishti)](https://github.com/XesloohcDemiGod/Tridishti/issues)
 
-Tridishti is a VS Code extension that integrates the ancient Indian philosophy of **Jnana (knowledge)**, **Karma (action)**, and **Bhakti (reflection)** into modern developer workflows. It helps developers maintain productive, mindful coding sessions through structured reflection, milestone tracking, and continuous learning.
+## What is Tridishti?
 
-## 🎯 Philosophy
+**Tridishti** is a VS Code extension that transforms your coding sessions into mindful, productive journeys. Inspired by ancient Indian philosophy, it integrates **Jnana (Knowledge)**, **Karma (Action)**, and **Bhakti (Reflection)** into modern development workflows.
 
-Drawing inspiration from the Bhagavad Gita and Puranic traditions, Tridishti maps software development to spiritual practice:
+Beyond a productivity tool, Tridishti is about intentional development—setting clear goals, tracking meaningful milestones, capturing learning moments, and reflecting on your progress.
 
-- **Jnana (Knowledge)**: Learning and insight capture
-- **Karma (Action)**: Milestone tracking and workflow management
-- **Bhakti (Reflection)**: Self-inquiry and continuous improvement
+### Key Differentiator
 
-## ✨ Features
+While most productivity tools focus on *what* you accomplish, **Tridishti focuses on *how* and *why*** you work. It bridges the gap between raw productivity metrics and meaningful, sustainable development practices through structured reflection and intentional practice.
 
-### Core Modules
+---
 
-- **🧵 Sutra Checkpoints**: Periodic reflection threads that capture your coding state
-- **🌸 Karma Phala Milestones**: Track the "fruits of action" with scoring and Git integration
-- **⚠️ Dharma Sankata Detection**: Scope drift alerts to maintain focus on intentions
-- **🚶 Yatra Session Management**: Structured coding journeys with Sankalpa (intentions)
+## ✨ Core Features
 
-### Learning & Memory
+### 🧵 Jnana (Knowledge Module)
+- **Capture Knowledge**: Record insights, gotchas, patterns, solutions, and questions as you code
+- **Smart Search**: Index and retrieve knowledge by category, tags, or full-text search
+- **Smriti Recall**: Revisit past learnings in future sessions
+- **Context Awareness**: Link knowledge to specific files, lines, and sessions
 
-- **📚 Jnana Capture**: Capture insights, patterns, solutions, and gotchas
-- **📝 Smriti Recall**: Indexed knowledge retrieval with pluggable storage backends
-- **🔍 Smart Search**: Find knowledge by category, tags, or content
+### ⚡ Karma (Action Module)
+- **Sutra Checkpoints**: Periodic snapshots of your coding state with manual or automatic triggers
+- **Karma Phala Milestones**: Mark significant achievements with scoring and git integration
+- **Dharma Alignment Check**: Detect scope drift and ensure focus on your initial intention
+- **Yatra Sessions**: Structure entire coding journeys with clear intentions (Sankalpa) and outcomes
 
-### Reflection & Analytics
+### 🪞 Bhakti (Reflection Module)
+- **Atma Vichara**: Guided end-session reflection prompts
+- **Drishti Dashboard**: Analytics on productivity, focus, and learning patterns
+- **Health Monitoring**: Extension performance and resource usage metrics
+- **Session Analytics**: Understand your coding rhythms and optimize work patterns
 
-- **🪞 Atma Vichara**: Guided self-inquiry and end-session reflection
-- **📊 Drishti Dashboard**: Analytics and productivity insights
-- **📈 Health Monitoring**: Extension status and performance metrics
+### 🎯 Intelligent Features
+- **Real-time File Watching**: Automatic change detection during sessions
+- **Smart Nudges**: Context-aware reminders based on your workflow strategy
+- **Git Integration**: Automatic tagging and branch management
+- **Data Persistence**: Local-first architecture with optional cloud sync (future)
 
-## 🚀 Installation
+---
 
-### From Source
+## 🚀 Quick Start
 
-```bash
-git clone https://github.com/XesloohcDemiGod/Tridishti.git
-cd tridishti
-npm install
-npm run compile
-```
+### Installation
 
-### VS Code Extension
+1. **From VS Code Marketplace** (Coming soon)
+   - Search for "Tridishti" in VS Code Extensions
+   - Click Install
 
-1. Open VS Code
-2. Press `Ctrl+Shift+P` (or `Cmd+Shift+P` on Mac)
-3. Type "Extensions: Install from VSIX"
-4. Select the compiled `.vsix` file
+2. **From Source**
+   ```bash
+   git clone https://github.com/XesloohcDemiGod/Tridishti.git
+   cd Tridishti
+   npm install
+   npm run compile
+   # In VS Code: Ctrl+Shift+P > Extensions: Install from VSIX
+   ```
 
-## 🛠️ Usage
+### First Steps
 
-### Quick Start
+1. **Set Your Sankalpa** (`Cmd/Ctrl+Shift+P` → "Tridishti: Create Yatra")
+   - Define your coding intention for the session
 
-1. **Set Your Sankalpa**: Define your coding intention for the session
-2. **Start a Yatra**: Begin a structured coding session
-3. **Capture Jnana**: Record insights and learnings as you code
-4. **Create Milestones**: Mark significant achievements
-5. **Reflect**: Use Atma Vichara for guided self-inquiry
+2. **Start Capturing** (`Cmd/Ctrl+Shift+P` → "Tridishti: Capture Jnana")
+   - Record insights as they emerge
 
-### Commands
+3. **Mark Milestones** (`Cmd/Ctrl+Shift+P` → "Tridishti: Create Karma Phala")
+   - Celebrate achievements and progress
 
-- `Tridishti: Create Sutra` - Manually create a checkpoint
-- `Tridishti: Create Karma Phala Milestone` - Mark a milestone
-- `Tridishti: Capture Jnana` - Record knowledge or insights
-- `Tridishti: Check Dharma Alignment` - Verify scope alignment
-- `Tridishti: Show Current Yatra` - View active session
-- `Tridishti: Show Drishti Dashboard` - View analytics
-- `Tridishti: End Session (Atma Vichara)` - Guided reflection
+4. **Reflect** (`Cmd/Ctrl+Shift+P` → "Tridishti: End Session")
+   - Guided reflection to consolidate learning
 
-### Configuration
+---
 
-Configure Tridishti through VS Code settings:
+## 🛠️ Commands Reference
+
+| Command | Shortcut | Description |
+|---------|----------|-------------|
+| Create Sutra | - | Create a checkpoint snapshot |
+| Create Karma Phala | - | Mark a milestone achievement |
+| Capture Jnana | - | Record knowledge or insights |
+| Check Dharma | - | Verify scope alignment |
+| Show Yatra | - | View current session details |
+| Show Drishti | - | Open analytics dashboard |
+| End Session | - | Guided reflection (Atma Vichara) |
+
+---
+
+## ⚙️ Configuration
+
+Customize Tridishti via VS Code Settings (`Cmd+,`):
 
 ```json
 {
   "tridishti.enabled": true,
-  "tridishti.checkpointInterval": 30,
-  "tridishti.milestoneThreshold": 120,
-  "tridishti.scopeCheckInterval": 60,
-  "tridishti.fileChangeThreshold": 10,
-  "tridishti.nudgeStrategy": "default",
+  "tridishti.checkpointInterval": 30,          // minutes
+  "tridishti.milestoneThreshold": 120,         // minutes
+  "tridishti.scopeCheckInterval": 60,          // minutes
+  "tridishti.fileChangeThreshold": 10,         // max files
+  "tridishti.nudgeStrategy": "default",        // deep-work|exploration|maintenance
   "tridishti.autoCommit": false,
   "tridishti.autoTag": false,
-  "tridishti.learningCategories": ["insight", "gotcha", "pattern", "solution", "question"]
+  "tridishti.learningCategories": [
+    "insight", "gotcha", "pattern", "solution", "question"
+  ]
 }
 ```
 
+---
+
+## 📊 Project Status
+
+### Metrics
+- **~5,000** lines of TypeScript code
+- **90%+** test coverage (Jest)
+- **100+** test cases
+- Multi-platform support (Windows, macOS, Linux)
+- VS Code 1.80+ compatibility
+
+### Architecture
+- 8 core modules (Jnana, Karma, Bhakti)
+- Strict TypeScript with JSDoc
+- Comprehensive Jest test suite
+- ESLint + Prettier + GitHub Actions CI/CD
+
+---
+
 ## 🧪 Development
-
-### Prerequisites
-
-- Node.js 18+
-- VS Code 1.80+
-- TypeScript 5.0+
 
 ### Setup
 
 ```bash
+# Install dependencies
 npm install
+
+# Compile TypeScript
 npm run compile
+
+# Watch mode (auto-compile)
+npm run watch
+
+# Run tests
 npm test
+
+# Generate coverage
+npm run test:coverage
+
+# Lint code
+npm run lint
+
+# Format code
+npm run format
 ```
 
 ### Testing
@@ -121,205 +163,174 @@ npm test
 # Run all tests
 npm test
 
-# Run tests in watch mode
+# Watch mode
 npm run test:watch
 
-# Generate coverage report
+# Coverage report
 npm run test:coverage
+
+# Run specific test file
+npm test -- src/core/sutra-checkpoints.test.ts
 ```
 
 ### Building
 
 ```bash
-# Compile TypeScript
-npm run compile
+# Create VSIX package
+npm run package
 
-# Watch mode compilation
-npm run watch
-
-# Lint code
-npm run lint
+# Output: Tridishti-*.vsix
 ```
-
-## 📚 API Documentation
-
-### Core Types
-
-```typescript
-interface ISutraCheckpoint {
-  id: string;
-  timestamp: number;
-  message?: string;
-  filesChanged: string[];
-  gitCommitHash?: string;
-}
-
-interface IKarmaPhala {
-  id: string;
-  milestoneId: string;
-  timestamp: number;
-  score: number;
-  duration: number;
-  filesModified: string[];
-  gitTag?: string;
-}
-
-interface IJnana {
-  id: string;
-  category: JnanaCategory;
-  content: string;
-  context?: {
-    file?: string;
-    line?: number;
-    timestamp: number;
-    yatraId?: string;
-  };
-  tags?: string[];
-}
-```
-
-## 🤝 Contributing
-
-We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
-
-### Development Workflow
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests
-5. Ensure all tests pass
-6. Submit a pull request
-
-### Code Quality
-
-- TypeScript strict mode enabled
-- ESLint and Prettier configured
-- Jest test coverage >80%
-- JSDoc comments on all public APIs
-- Semantic versioning
-
-## 📄 License
-
-MIT License - see [LICENSE](LICENSE) file for details.
-
-## 🙏 Acknowledgments
-
-Inspired by:
-
-- Bhagavad Gita teachings on Jnana, Karma, and Bhakti
-- Puranic concepts of Dharma and Yatra
-- Modern productivity and mindfulness practices
-
-## 📞 Support
-
-- [GitHub Issues](https://github.com/XesloohcDemiGod/Tridishti/issues)
-- [Discussions](https://github.com/XesloohcDemiGod/Tridishti/discussions)
-- [Documentation](https://tridishti.dev)
-
-## 🤝 Contributing
-
-We welcome contributions from developers of all skill levels! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
-
-### Quick Start for Contributors
-
-1. Fork the repository
-2. Clone your fork: `git clone https://github.com/XesloohcDemiGod/Tridishti.git`
-3. Create a feature branch: `git checkout -b feature/your-feature`
-4. Install dependencies: `npm install`
-5. Make your changes and add tests
-6. Run the test suite: `npm test`
-7. Submit a pull request
-
-### Development Commands
-
-```bash
-npm run compile    # Compile TypeScript
-npm run watch      # Watch mode compilation
-npm test           # Run test suite
-npm run lint       # Lint code
-npm run test:coverage # Generate coverage report
-```
-
-## 📊 Project Status
-
-### 📈 Metrics
-
-- **Lines of Code**: ~5000+ lines
-- **Test Coverage**: 90%+ (Jest)
-- **Supported Platforms**: Windows, macOS, Linux
-- **VS Code Versions**: 1.80+
-
-### 🏗️ Architecture
-
-- **Modules**: 8 core modules (Jnana, Karma, Bhakti)
-- **Languages**: TypeScript (primary), JavaScript (compiled)
-- **Testing**: Jest with VS Code API mocking
-- **Build**: npm scripts with TypeScript compilation
-
-## 📖 Documentation
-
-- **[📚 README](README.md)** - Installation and usage guide
-- **[🤝 Contributing](CONTRIBUTING.md)** - Development guidelines
-- **[🛡️ Security](SECURITY.md)** - Security policy and reporting
-- **[📋 Changelog](CHANGELOG.md)** - Version history
-- **[🗺️ Roadmap](ROADMAP.md)** - Future development plans
-- **[📋 Code of Conduct](CODE_OF_CONDUCT.md)** - Community standards
-
-## 🎯 Roadmap
-
-See our [Roadmap](ROADMAP.md) for upcoming features and planned improvements.
-
-### Recently Completed ✅
-
-- Complete extension implementation with Jnana, Karma, Bhakti integration
-- Comprehensive test suite with 100+ test cases
-- Full documentation and contribution guidelines
-- CI/CD pipeline with GitHub Actions
-
-### Upcoming 🚧
-
-- Advanced AI insights for productivity optimization
-- Team collaboration features
-- Cloud synchronization
-- Mobile companion app
-
-## 🙏 Acknowledgments
-
-### Philosophical Inspiration
-
-- **Bhagavad Gita**: Jnana, Karma, and Bhakti teachings
-- **Puranic Traditions**: Ancient Indian wisdom and philosophy
-- **Buddhist Mindfulness**: Present-moment awareness in development
-
-### Technical Acknowledgments
-
-- **VS Code Extension API**: Rich platform for extension development
-- **TypeScript Community**: Strong typing and developer experience
-- **Open Source Community**: Jest, ESLint, Prettier, and countless other tools
-
-### Contributors
-
-We appreciate all contributors who help make Tridishti better!
-
-<a href="https://github.com/XesloohcDemiGod/Tridishti/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=XesloohcDemiGod/Tridishti" />
-</a>
-
-## 📞 Contact & Support
-
-- **📧 Email**: [contact@tridishti.dev](mailto:contact@tridishti.dev)
-- **🐛 Issues**: [GitHub Issues](https://github.com/XesloohcDemiGod/Tridishti/issues)
-- **💬 Discussions**: [GitHub Discussions](https://github.com/XesloohcDemiGod/Tridishti/discussions)
-- **📖 Documentation**: [GitHub Wiki](https://github.com/XesloohcDemiGod/Tridishti/wiki)
-
-## 📜 License
-
-Copyright © 2025 Tridishti Team.
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 
-_"You have the right to perform your prescribed duties, but you are not entitled to the fruits of your actions."_
-— Bhagavad Gita 2.47
+## 🎯 Roadmap
+
+### Phase 3: UX Polish & Core Features (Q1 2025)
+- Onboarding flow with Sankalpa creation
+- Timeline visualization for session history
+- Notification system with smart nudges
+- Keyboard shortcuts for quick access
+- Git integration with auto-tagging
+- Performance optimization
+- Accessibility improvements
+
+### Phase 4: Advanced Analytics (Q2 2025)
+- Drishti Dashboard enhancements
+- ML-driven scope drift prediction
+- Productivity pattern recognition
+- Advanced visualizations (heat maps, network graphs)
+
+### Phase 5: Ecosystem Integration (Q3 2025)
+- GitHub, GitLab, Jira integration
+- Obsidian, Notion, Logseq sync
+- Slack/Teams notifications
+- Toggl and RescueTime integration
+
+### Phase 6: Platform Expansion (Q4 2025)
+- Multi-IDE support (Cursor, JetBrains, Vim)
+- Web version of Drishti
+- Mobile companion app
+- REST API and SDK
+
+### Phase 7+: Collaboration & Innovation (2026+)
+- Team collaboration features
+- Enterprise SSO and audit logging
+- Advanced AI insights
+- Academic research partnerships
+
+See the full [ROADMAP](./ROADMAP.md) for detailed plans.
+
+---
+
+## 📚 Documentation
+
+- **[Quick Start Guide](./docs/QUICKSTART.md)** - Get started in 5 minutes
+- **[User Guide](./docs/USER_GUIDE.md)** - Complete feature documentation
+- **[API Reference](./docs/API_REFERENCE.md)** - TypeScript types and interfaces
+- **[Contributing Guide](./CONTRIBUTING.md)** - How to contribute
+- **[Security Policy](./SECURITY.md)** - Security reporting
+- **[FAQ](./docs/FAQ.md)** - Common questions and answers
+
+---
+
+## 🤝 Contributing
+
+We welcome contributions from developers of all skill levels! Here's how you can help:
+
+### Getting Started
+
+1. **Fork** the repository
+2. **Clone** your fork: `git clone https://github.com/YOUR_USERNAME/Tridishti.git`
+3. **Create** a feature branch: `git checkout -b feature/your-feature`
+4. **Make** your changes and add tests
+5. **Run** `npm run lint && npm test` to verify
+6. **Commit** with clear messages: `git commit -m "feat: description"`
+7. **Push** and create a Pull Request
+
+### Code Quality
+
+We maintain high standards:
+- ✅ TypeScript strict mode
+- ✅ 90%+ test coverage (Jest)
+- ✅ ESLint + Prettier formatted
+- ✅ JSDoc comments on public APIs
+- ✅ Semantic versioning
+
+### Areas We Need Help
+
+- 🎨 UI/UX improvements and design
+- 🧪 Expanding test coverage
+- 📖 Documentation and tutorials
+- 🌍 Translations and localization
+- 🐛 Bug fixes and issue triage
+- ⚡ Performance optimizations
+
+---
+
+## 💡 Philosophy
+
+Tridishti draws inspiration from profound philosophical traditions:
+
+**Bhagavad Gita 2:47** — "You have the right to perform your prescribed duties, but you are not entitled to the fruits of your actions."
+
+This principle guides our approach: focus on the *process* of intentional, mindful coding rather than just output metrics. By cultivating Jnana (understanding), Karma (disciplined action), and Bhakti (reflective practice), we enable sustainable, meaningful development.
+
+---
+
+## 📦 Requirements
+
+- **VS Code**: 1.80.0 or later
+- **Node.js**: 18.0.0 or later (for development)
+- **Git**: For version control features
+- **Platform**: Windows, macOS, or Linux
+
+---
+
+## 📄 License
+
+Tridishti is licensed under the **MIT License**. See [LICENSE](./LICENSE) for details.
+
+```
+Copyright © 2025 Tridishti Team
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction...
+```
+
+---
+
+## 💬 Support & Community
+
+- 📝 **[GitHub Issues](https://github.com/XesloohcDemiGod/Tridishti/issues)** - Report bugs or request features
+- 💬 **[GitHub Discussions](https://github.com/XesloohcDemiGod/Tridishti/discussions)** - Ask questions and share ideas
+- 📧 **Email**: contact@tridishti.dev
+- 🌐 **[Website](https://tridishti.dev)** - Learn more and read blog posts
+- 🐦 **Twitter**: [@Tridishti](https://twitter.com/tridishti) (coming soon)
+
+---
+
+## 🙏 Acknowledgments
+
+### Philosophical Foundations
+- **Bhagavad Gita** - Teachings on Jnana, Karma, and Bhakti
+- **Puranic Traditions** - Ancient Indian wisdom
+- **Buddhist Mindfulness** - Present-moment awareness
+
+### Technical Inspiration
+- **VS Code Extension API** - Rich development platform
+- **TypeScript Community** - Modern, type-safe development
+- **Jest, ESLint, Prettier** - Developer tooling excellence
+- **Open Source Community** - Collaborative spirit
+
+### Contributors
+Special thanks to all contributors! See the [Contributors](https://github.com/XesloohcDemiGod/Tridishti/graphs/contributors) page.
+
+---
+
+## 🚀 Made with ❤️
+
+Built for developers who believe in intentional, mindful, and sustainable coding practices.
+
+**"The journey of a thousand lines of code begins with a single Sankalpa."** — Lao Tzu (adapted)
