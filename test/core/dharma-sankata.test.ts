@@ -2,8 +2,7 @@
  * Test suite for DharmaSankata module
  */
 
-import { DharmaSankata } from '../../src/core/dharma-sankata';
-import { IDharmaSankataConfig } from '../../src/core/dharma-sankata';
+import { DharmaSankata, IDharmaSankataConfig } from '../../src/core/dharma-sankata';
 
 describe('DharmaSankata', () => {
   let config: IDharmaSankataConfig;
@@ -129,11 +128,18 @@ describe('DharmaSankata', () => {
     });
 
     it('should return latest alert', async () => {
+      // Create a detected alert by exceeding threshold
+      const mockVSCode = (global as any).testUtils.mockVSCode;
+      mockVSCode.workspace.textDocuments = Array(15).fill({
+        uri: { scheme: 'file' },
+        isDirty: true,
+      });
+
       await dharmaSankata.checkScope();
       const latest = dharmaSankata.getLatestAlert();
 
       expect(latest).toBeDefined();
-      expect(latest?.detected).toBe(false);
+      expect(latest?.detected).toBe(true);
     });
 
     it('should return undefined when no alerts exist', () => {

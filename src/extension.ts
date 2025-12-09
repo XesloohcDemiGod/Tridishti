@@ -424,6 +424,21 @@ export function deactivate(): void {
 }
 
 /**
+ * Escapes HTML special characters
+ * @param text Text to escape
+ * @returns Escaped HTML string
+ */
+function escapeHtml(text: string | undefined | null): string {
+  if (!text) return '';
+  return text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
+/**
  * Generates HTML content for yatra webview
  * @param yatra Yatra to display
  * @returns HTML string
@@ -451,8 +466,8 @@ export function getYatraWebviewContent(yatra: any): string {
 
   <div class="section">
     <h2>🕉️ Sankalpa (Intention)</h2>
-    <p><strong>Current:</strong> ${yatra.sankalpa || 'Not set'}</p>
-    <input type="text" class="sankalpa-input" id="sankalpaInput" placeholder="Set your intention for this session..." value="${yatra.sankalpa || ''}">
+    <p><strong>Current:</strong> ${escapeHtml(yatra.sankalpa) || 'Not set'}</p>
+    <input type="text" class="sankalpa-input" id="sankalpaInput" placeholder="Set your intention for this session..." value="${escapeHtml(yatra.sankalpa || '')}">
     <button class="button" onclick="updateSankalpa()">Update Sankalpa</button>
   </div>
 
@@ -461,7 +476,7 @@ export function getYatraWebviewContent(yatra: any): string {
     ${
       yatra.checkpoints.length > 0
         ? yatra.checkpoints
-            .map((cp: any) => `<div class="checkpoint">${cp.message || cp.id}</div>`)
+            .map((cp: any) => `<div class="checkpoint">${escapeHtml(cp.message || cp.id)}</div>`)
             .join('')
         : '<p>No checkpoints yet. Create your first with Ctrl+Shift+P → "Tridishti: Create Sutra"</p>'
     }
@@ -472,7 +487,7 @@ export function getYatraWebviewContent(yatra: any): string {
     ${
       yatra.milestones.length > 0
         ? yatra.milestones
-            .map((m: any) => `<div class="milestone">${m.name} - ${m.status}</div>`)
+            .map((m: any) => `<div class="milestone">${escapeHtml(m.name)} - ${escapeHtml(m.status)}</div>`)
             .join('')
         : '<p>No milestones yet. Create your first with Ctrl+Shift+P → "Tridishti: Create Karma Phala Milestone"</p>'
     }
@@ -483,7 +498,7 @@ export function getYatraWebviewContent(yatra: any): string {
     ${
       yatra.dharmaAlerts.length > 0
         ? yatra.dharmaAlerts
-            .map((a: any) => `<div class="alert">${a.reason}: ${a.suggestion || ''}</div>`)
+            .map((a: any) => `<div class="alert">${escapeHtml(a.reason)}: ${escapeHtml(a.suggestion || '')}</div>`)
             .join('')
         : '<p>No scope drift detected. Your dharma is aligned! 🕉️</p>'
     }
@@ -530,8 +545,8 @@ export function getDharmaAlertWebviewContent(sankata: any): string {
   <h1>⚠️ Dharma Sankata Detected</h1>
 
   <div class="alert">
-    <h2>${sankata.reason.replace('_', ' ').toUpperCase()}</h2>
-    <p><strong>Reason:</strong> ${sankata.reason}</p>
+    <h2>${escapeHtml(sankata.reason.replace('_', ' ').toUpperCase())}</h2>
+    <p><strong>Reason:</strong> ${escapeHtml(sankata.reason)}</p>
     <p><strong>Detected:</strong> ${sankata.detected ? 'Yes' : 'No'}</p>
   </div>
 
@@ -540,8 +555,8 @@ export function getDharmaAlertWebviewContent(sankata: any): string {
     <ul>
       <li><strong>Files Changed:</strong> ${sankata.details.filesChanged}</li>
       <li><strong>Threshold:</strong> ${sankata.details.threshold}</li>
-      ${sankata.details.currentGoal ? `<li><strong>Current Goal:</strong> ${sankata.details.currentGoal}</li>` : ''}
-      ${sankata.details.detectedGoal ? `<li><strong>Detected Goal:</strong> ${sankata.details.detectedGoal}</li>` : ''}
+      ${sankata.details.currentGoal ? `<li><strong>Current Goal:</strong> ${escapeHtml(sankata.details.currentGoal)}</li>` : ''}
+      ${sankata.details.detectedGoal ? `<li><strong>Detected Goal:</strong> ${escapeHtml(sankata.details.detectedGoal)}</li>` : ''}
     </ul>
   </div>
 
@@ -550,7 +565,7 @@ export function getDharmaAlertWebviewContent(sankata: any): string {
       ? `
   <div class="suggestion">
     <h3>💡 Suggestion</h3>
-    <p>${sankata.suggestion}</p>
+    <p>${escapeHtml(sankata.suggestion)}</p>
   </div>
   `
       : ''
@@ -567,6 +582,12 @@ export function getDharmaAlertWebviewContent(sankata: any): string {
  * @param health Health status
  * @returns HTML string
  */
+/**
+ * Generates HTML content for drishti dashboard webview
+ * @param metrics Dashboard metrics
+ * @param health Health status
+ * @returns HTML string
+ */
 export function getDrishtiWebviewContent(metrics: any, health: any): string {
   const healthColors: Record<string, string> = {
     healthy: '#4CAF50',
@@ -575,6 +596,36 @@ export function getDrishtiWebviewContent(metrics: any, health: any): string {
   };
   const healthColor = healthColors[health.status] || '#666';
 
+  // Productivity score color coding
+  const getProductivityColor = (score: number): string => {
+    if (score >= 80) return '#4CAF50';
+    if (score >= 60) return '#FF9800';
+    if (score >= 40) return '#FFC107';
+    return '#F44336';
+  };
+  const productivityColor = getProductivityColor(metrics.productivityScore);
+
+  // Format event type for display
+  const formatEventType = (type: string): string => {
+    return type
+      .split('_')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+  };
+
+  // Get event icon
+  const getEventIcon = (type: string): string => {
+    const icons: Record<string, string> = {
+      checkpoint: '🧵',
+      milestone: '🌸',
+      dharma_alert: '⚠️',
+      yatra_start: '🚀',
+      yatra_end: '✅',
+      jnana_capture: '📚',
+    };
+    return icons[type] || '📌';
+  };
+
   return `<!DOCTYPE html>
 <html>
 <head>
@@ -582,17 +633,161 @@ export function getDrishtiWebviewContent(metrics: any, health: any): string {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Drishti Dashboard</title>
   <style>
-    body { font-family: var(--vscode-font-family); padding: 20px; background: var(--vscode-editor-background); color: var(--vscode-editor-foreground); }
-    h1 { color: var(--vscode-textLink-foreground); text-align: center; margin-bottom: 30px; }
-    .health { padding: 20px; background: ${healthColor}20; border: 2px solid ${healthColor}; border-radius: 8px; margin: 20px 0; text-align: center; }
-    .health h2 { color: ${healthColor}; margin: 0; }
-    .metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin: 20px 0; }
-    .metric { background: var(--vscode-editorWidget-background); padding: 20px; border-radius: 8px; text-align: center; border: 1px solid var(--vscode-widget-border); }
-    .metric-value { font-size: 36px; font-weight: bold; color: var(--vscode-textLink-foreground); }
-    .metric-label { font-size: 14px; color: var(--vscode-descriptionForeground); margin-top: 8px; }
-    .recent-activity { background: var(--vscode-editorWidget-background); padding: 20px; border-radius: 8px; margin: 20px 0; border: 1px solid var(--vscode-widget-border); }
-    .activity-item { padding: 8px 0; border-bottom: 1px solid var(--vscode-list-inactiveSelectionBackground); }
-    .activity-item:last-child { border-bottom: none; }
+    * { box-sizing: border-box; }
+    body {
+      font-family: var(--vscode-font-family);
+      padding: 20px;
+      background: var(--vscode-editor-background);
+      color: var(--vscode-editor-foreground);
+      margin: 0;
+    }
+    h1 {
+      color: var(--vscode-textLink-foreground);
+      text-align: center;
+      margin-bottom: 10px;
+      font-size: 24px;
+    }
+    h2, h3 {
+      margin-top: 0;
+      margin-bottom: 15px;
+    }
+    .health {
+      padding: 20px;
+      background: ${healthColor}20;
+      border: 2px solid ${healthColor};
+      border-radius: 8px;
+      margin: 20px 0;
+      text-align: center;
+    }
+    .health h2 {
+      color: ${healthColor};
+      margin: 0 0 10px 0;
+      font-size: 20px;
+    }
+    .health p {
+      margin: 5px 0;
+      font-size: 14px;
+    }
+    .active-yatra {
+      background: var(--vscode-editorWidget-background);
+      padding: 15px;
+      border-radius: 8px;
+      margin: 20px 0;
+      border: 1px solid var(--vscode-widget-border);
+    }
+    .active-yatra h3 {
+      margin-top: 0;
+      color: var(--vscode-textLink-foreground);
+    }
+    .active-yatra-info {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      font-size: 14px;
+    }
+    .active-yatra-info span {
+      color: var(--vscode-descriptionForeground);
+    }
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 15px;
+      margin: 20px 0;
+    }
+    .metric {
+      background: var(--vscode-editorWidget-background);
+      padding: 20px;
+      border-radius: 8px;
+      text-align: center;
+      border: 1px solid var(--vscode-widget-border);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .metric:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .metric-icon {
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+    .metric-value {
+      font-size: 36px;
+      font-weight: bold;
+      color: var(--vscode-textLink-foreground);
+      line-height: 1.2;
+    }
+    .metric.productivity .metric-value {
+      color: ${productivityColor};
+    }
+    .metric-label {
+      font-size: 13px;
+      color: var(--vscode-descriptionForeground);
+      margin-top: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .recent-activity {
+      background: var(--vscode-editorWidget-background);
+      padding: 20px;
+      border-radius: 8px;
+      margin: 20px 0;
+      border: 1px solid var(--vscode-widget-border);
+    }
+    .recent-activity h3 {
+      margin-top: 0;
+      color: var(--vscode-textLink-foreground);
+    }
+    .activity-item {
+      padding: 10px 0;
+      border-bottom: 1px solid var(--vscode-list-inactiveSelectionBackground);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+    }
+    .activity-item:last-child {
+      border-bottom: none;
+    }
+    .activity-icon {
+      font-size: 18px;
+    }
+    .activity-type {
+      font-weight: 600;
+      color: var(--vscode-textLink-foreground);
+      flex: 1;
+    }
+    .activity-time {
+      color: var(--vscode-descriptionForeground);
+      font-size: 12px;
+    }
+    .module-health {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 10px;
+      margin-top: 15px;
+    }
+    .module-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      padding: 5px;
+    }
+    .module-status {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #4CAF50;
+    }
+    .footer {
+      text-align: center;
+      color: var(--vscode-descriptionForeground);
+      font-style: italic;
+      font-size: 13px;
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid var(--vscode-widget-border);
+    }
   </style>
 </head>
 <body>
@@ -601,47 +796,79 @@ export function getDrishtiWebviewContent(metrics: any, health: any): string {
   <div class="health">
     <h2>System Health: ${health.status.toUpperCase()}</h2>
     <p>Last event: ${health.lastEventTime ? new Date(health.lastEventTime).toLocaleString() : 'Never'}</p>
-  </div>
-
-  <div class="metrics-grid">
-    <div class="metric">
-      <div class="metric-value">${metrics.totalYatras}</div>
-      <div class="metric-label">Total Yatras</div>
-    </div>
-    <div class="metric">
-      <div class="metric-value">${metrics.totalCheckpoints}</div>
-      <div class="metric-label">Sutra Checkpoints</div>
-    </div>
-    <div class="metric">
-      <div class="metric-value">${metrics.totalMilestones}</div>
-      <div class="metric-label">Karma Phala</div>
-    </div>
-    <div class="metric">
-      <div class="metric-value">${metrics.totalDharmaAlerts}</div>
-      <div class="metric-label">Dharma Alerts</div>
-    </div>
-    <div class="metric">
-      <div class="metric-value">${metrics.totalJnana}</div>
-      <div class="metric-label">Jnana Captured</div>
-    </div>
-    <div class="metric">
-      <div class="metric-value">${metrics.productivityScore}</div>
-      <div class="metric-label">Productivity Score</div>
+    <div class="module-health">
+      ${Object.entries(health.modules)
+        .map(
+          ([module, status]) =>
+            `<div class="module-item">
+          <span class="module-status" style="background: ${status ? '#4CAF50' : '#F44336'}"></span>
+          <span>${module.replace(/([A-Z])/g, ' $1').trim()}</span>
+        </div>`
+        )
+        .join('')}
     </div>
   </div>
 
   ${
-    metrics.averageSessionDuration > 0
+    metrics.activeYatra
       ? `
-  <div class="metrics-grid">
-    <div class="metric">
-      <div class="metric-value">${metrics.averageSessionDuration}</div>
-      <div class="metric-label">Avg Session (min)</div>
+  <div class="active-yatra">
+    <h3>🚀 Active Yatra</h3>
+    <div class="active-yatra-info">
+      <span><strong>Sankalpa:</strong> ${metrics.activeYatra.sankalpa || 'Untitled session'}</span>
+      <span><strong>Started:</strong> ${new Date(metrics.activeYatra.startedAt).toLocaleString()}</span>
+      <span><strong>Checkpoints:</strong> ${metrics.activeYatra.checkpoints.length}</span>
+      <span><strong>Milestones:</strong> ${metrics.activeYatra.milestones.length}</span>
+      <span><strong>Alerts:</strong> ${metrics.activeYatra.dharmaAlerts.length}</span>
     </div>
   </div>
   `
       : ''
   }
+
+  <div class="metrics-grid">
+    <div class="metric">
+      <div class="metric-icon">🧘</div>
+      <div class="metric-value">${metrics.totalYatras}</div>
+      <div class="metric-label">Total Yatras</div>
+    </div>
+    <div class="metric">
+      <div class="metric-icon">🧵</div>
+      <div class="metric-value">${metrics.totalCheckpoints}</div>
+      <div class="metric-label">Sutra Checkpoints</div>
+    </div>
+    <div class="metric">
+      <div class="metric-icon">🌸</div>
+      <div class="metric-value">${metrics.totalMilestones}</div>
+      <div class="metric-label">Karma Phala</div>
+    </div>
+    <div class="metric">
+      <div class="metric-icon">⚠️</div>
+      <div class="metric-value">${metrics.totalDharmaAlerts}</div>
+      <div class="metric-label">Dharma Alerts</div>
+    </div>
+    <div class="metric">
+      <div class="metric-icon">📚</div>
+      <div class="metric-value">${metrics.totalJnana}</div>
+      <div class="metric-label">Jnana Captured</div>
+    </div>
+    <div class="metric productivity">
+      <div class="metric-icon">📊</div>
+      <div class="metric-value">${metrics.productivityScore}</div>
+      <div class="metric-label">Productivity Score</div>
+    </div>
+    ${
+      metrics.averageSessionDuration > 0
+        ? `
+    <div class="metric">
+      <div class="metric-icon">⏱️</div>
+      <div class="metric-value">${metrics.averageSessionDuration}</div>
+      <div class="metric-label">Avg Session (min)</div>
+    </div>
+    `
+        : ''
+    }
+  </div>
 
   <div class="recent-activity">
     <h3>Recent Activity</h3>
@@ -651,17 +878,19 @@ export function getDrishtiWebviewContent(metrics: any, health: any): string {
             .map(
               (event: any) =>
                 `<div class="activity-item">
-            <strong>${event.type}</strong> - ${new Date(event.timestamp).toLocaleTimeString()}
+            <span class="activity-icon">${getEventIcon(event.type)}</span>
+            <span class="activity-type">${formatEventType(event.type)}</span>
+            <span class="activity-time">${new Date(event.timestamp).toLocaleString()}</span>
           </div>`
             )
             .join('')
-        : '<p>No recent activity</p>'
+        : '<p style="color: var(--vscode-descriptionForeground);">No recent activity</p>'
     }
   </div>
 
-  <p style="text-align: center; color: var(--vscode-descriptionForeground); font-style: italic;">
+  <div class="footer">
     "The vision of the drishti extends beyond the material world." - Ancient Wisdom
-  </p>
+  </div>
 </body>
 </html>`;
 }
@@ -721,34 +950,34 @@ export function getAtmaVicharaWebviewContent(reflection: any, prompts: string[])
 
   <div class="section">
     <h2>🧘 Guided Reflection Prompts</h2>
-    ${prompts.map(prompt => `<div class="prompt">${prompt}</div>`).join('')}
+    ${prompts.map(prompt => `<div class="prompt">${escapeHtml(prompt)}</div>`).join('')}
   </div>
 
   <div class="section insights">
     <h2>🔍 Insights</h2>
     <ul class="list">
-      ${reflection.insights.map((insight: string) => `<li>${insight}</li>`).join('')}
+      ${reflection.insights.map((insight: string) => `<li>${escapeHtml(insight)}</li>`).join('')}
     </ul>
   </div>
 
   <div class="section achievements">
     <h2>🏆 Achievements</h2>
     <ul class="list">
-      ${reflection.achievements.map((achievement: string) => `<li>${achievement}</li>`).join('')}
+      ${reflection.achievements.map((achievement: string) => `<li>${escapeHtml(achievement)}</li>`).join('')}
     </ul>
   </div>
 
   <div class="section improvements">
     <h2>📈 Improvements</h2>
     <ul class="list">
-      ${reflection.improvements.map((improvement: string) => `<li>${improvement}</li>`).join('')}
+      ${reflection.improvements.map((improvement: string) => `<li>${escapeHtml(improvement)}</li>`).join('')}
     </ul>
   </div>
 
   <div class="section suggestions">
     <h2>💡 Suggestions for Future Sessions</h2>
     <ul class="list">
-      ${reflection.suggestions.map((suggestion: string) => `<li>${suggestion}</li>`).join('')}
+      ${reflection.suggestions.map((suggestion: string) => `<li>${escapeHtml(suggestion)}</li>`).join('')}
     </ul>
   </div>
 

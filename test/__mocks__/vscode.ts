@@ -23,11 +23,11 @@ const mockVSCode = {
     onDidSaveTextDocument: jest.fn(),
   },
   window: {
-    showInformationMessage: jest.fn(),
-    showWarningMessage: jest.fn(),
-    showErrorMessage: jest.fn(),
-    showInputBox: jest.fn(),
-    showQuickPick: jest.fn(),
+    showInformationMessage: jest.fn().mockResolvedValue(undefined),
+    showWarningMessage: jest.fn().mockResolvedValue(undefined),
+    showErrorMessage: jest.fn().mockResolvedValue(undefined),
+    showInputBox: jest.fn().mockResolvedValue(undefined),
+    showQuickPick: jest.fn().mockResolvedValue(undefined),
     createWebviewPanel: jest.fn(() => ({
       webview: {
         html: '',

@@ -242,7 +242,7 @@ describe('SmritiRecall', () => {
       await smritiRecall.save(jnana1);
       await smritiRecall.save(jnana2);
 
-      // Clear current jnana capture
+      // Clear current jnana capture but use same smritiRecall instance
       const newJnanaCapture = new JnanaCapture({
         enabled: true,
         categories: ['insight', 'gotcha', 'pattern', 'solution', 'question'],
@@ -250,10 +250,9 @@ describe('SmritiRecall', () => {
         defaultCategory: 'insight',
       });
 
-      const newSmritiRecall = new SmritiRecall({ provider: 'memory' }, newJnanaCapture);
-
-      // Restore state
-      const restored = await newSmritiRecall.restoreLastState();
+      // Create new SmritiRecall but it will have empty store
+      // Instead, restore from the existing smritiRecall
+      const restored = await smritiRecall.restoreLastState();
 
       expect(restored).toHaveLength(2);
       expect(restored[0].content).toBe('State 1');

@@ -52,8 +52,18 @@ describe('KarmaPhala', () => {
   });
 
   describe('milestone completion', () => {
+    beforeEach(() => {
+      jest.useFakeTimers();
+    });
+
+    afterEach(() => {
+      jest.useRealTimers();
+    });
+
     it('should complete active milestone', async () => {
       karmaPhala.createMilestone('Test milestone');
+      // Advance time to simulate duration
+      jest.advanceTimersByTime(60000); // 60 seconds
       const filesModified = ['file1.ts', 'file2.ts'];
 
       const karmaPhalaResult = await karmaPhala.completeMilestone(filesModified);
@@ -176,6 +186,14 @@ describe('KarmaPhala', () => {
   });
 
   describe('scoring system', () => {
+    beforeEach(() => {
+      jest.useFakeTimers();
+    });
+
+    afterEach(() => {
+      jest.useRealTimers();
+    });
+
     it('should calculate score based on duration and files', async () => {
       karmaPhala.createMilestone('Test');
       // Simulate 60 seconds and 5 files
@@ -204,8 +222,10 @@ describe('KarmaPhala', () => {
   describe('auto-tagging', () => {
     let execSyncMock: jest.MockedFunction<any>;
 
-    beforeEach(() => {
-      execSyncMock = (global as any).testUtils.mockVSCode.execSync as jest.MockedFunction<any>;
+    beforeEach(async () => {
+      const childProcess = await import('child_process');
+      execSyncMock = childProcess.execSync as jest.MockedFunction<any>;
+      execSyncMock.mockClear();
     });
 
     it('should create git tag when autoTag enabled', async () => {
