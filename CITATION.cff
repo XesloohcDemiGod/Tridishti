@@ -1,0 +1,30 @@
+cff-version: 1.2.0
+message: "If you use Tridishti in your research, please cite it as below."
+type: software
+title: "Tridishti: Code with threefold vision"
+abstract: "A VS Code extension that integrates Jnana (knowledge), Karma (action), and Bhakti (reflection) into developer workflows for mindful software development."
+authors:
+- family-names: "Tridishti"
+  given-names: "Project"
+  orcid: "https://orcid.org/0000-0000-0000-0000"
+repository-code: "https://github.com/XesloohcDemiGod/Tridishti"
+url: "https://github.com/XesloohcDemiGod/Tridishti"
+license: MIT
+keywords:
+  - "vscode-extension"
+  - "productivity"
+  - "mindfulness"
+  - "software-development"
+  - "philosophy"
+  - "jnana"
+  - "karma"
+  - "reflection"
+  - "knowledge-management"
+preferred-citation:
+  type: software
+  title: "Tridishti: Integrating Ancient Wisdom into Modern Development"
+  authors:
+  - family-names: "Tridishti"
+    given-names: "Project"
+  repository-code: "https://github.com/XesloohcDemiGod/Tridishti"
+  year: 2025
