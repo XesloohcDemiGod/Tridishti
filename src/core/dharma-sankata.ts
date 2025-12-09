@@ -105,7 +105,8 @@ export class DharmaSankata {
     if (this.detectTimeAnomaly(filesChanged)) {
       sankata.detected = true;
       sankata.reason = 'time_anomaly';
-      sankata.suggestion = 'Rapid file changes detected. This might indicate context switching or scope creep. Consider taking a moment to refocus.';
+      sankata.suggestion =
+        'Rapid file changes detected. This might indicate context switching or scope creep. Consider taking a moment to refocus.';
     }
 
     if (sankata.detected) {
@@ -169,9 +170,7 @@ export class DharmaSankata {
     }
 
     const files: string[] = [];
-    const textDocuments = vscode.workspace.textDocuments.filter(
-      (doc) => doc.isDirty
-    );
+    const textDocuments = vscode.workspace.textDocuments.filter(doc => doc.isDirty);
 
     for (const doc of textDocuments) {
       if (doc.uri.scheme === 'file') {
@@ -194,9 +193,9 @@ export class DharmaSankata {
 
     // Simple heuristic: check if file paths contain keywords that don't match the goal
     const goalKeywords = this.config.currentGoal.toLowerCase().split(/\s+/);
-    const mismatchedFiles = files.filter((file) => {
+    const mismatchedFiles = files.filter(file => {
       const fileName = file.toLowerCase();
-      return !goalKeywords.some((keyword) => fileName.includes(keyword));
+      return !goalKeywords.some(keyword => fileName.includes(keyword));
     });
 
     // If more than 50% of files don't match goal keywords, consider it a mismatch
@@ -209,7 +208,7 @@ export class DharmaSankata {
    * @returns Inferred goal string
    */
   private inferGoalFromFiles(files: string[]): string {
-    const commonPaths = files.map((f) => {
+    const commonPaths = files.map(f => {
       const parts = f.split(/[/\\]/);
       return parts[parts.length - 2] || parts[parts.length - 1] || '';
     });
@@ -230,7 +229,7 @@ export class DharmaSankata {
    */
   private detectTimeAnomaly(files: string[]): boolean {
     const now = Date.now();
-    const recentChanges = files.filter((file) => {
+    const recentChanges = files.filter(file => {
       const lastChange = this.fileChangeHistory.get(file);
       return lastChange && now - lastChange < 5000; // Changed within last 5 seconds
     });

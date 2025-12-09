@@ -95,9 +95,7 @@ export class SutraCheckpoints {
    * Gets the latest checkpoint
    */
   public getLatestCheckpoint(): ISutraCheckpoint | undefined {
-    return this.checkpoints.length > 0
-      ? this.checkpoints[this.checkpoints.length - 1]
-      : undefined;
+    return this.checkpoints.length > 0 ? this.checkpoints[this.checkpoints.length - 1] : undefined;
   }
 
   /**
@@ -123,9 +121,7 @@ export class SutraCheckpoints {
     }
 
     const files: string[] = [];
-    const textDocuments = vscode.workspace.textDocuments.filter(
-      (doc) => doc.isDirty
-    );
+    const textDocuments = vscode.workspace.textDocuments.filter(doc => doc.isDirty);
 
     for (const doc of textDocuments) {
       if (doc.uri.scheme === 'file') {

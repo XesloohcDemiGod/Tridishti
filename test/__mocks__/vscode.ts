@@ -46,10 +46,12 @@ const mockVSCode = {
     return {
       event: jest.fn((callback: (event: any) => void) => {
         listeners.push(callback);
-        return { dispose: jest.fn(() => {
-          const index = listeners.indexOf(callback);
-          if (index > -1) listeners.splice(index, 1);
-        })};
+        return {
+          dispose: jest.fn(() => {
+            const index = listeners.indexOf(callback);
+            if (index > -1) listeners.splice(index, 1);
+          }),
+        };
       }),
       fire: jest.fn((event: any) => {
         listeners.forEach(listener => listener(event));

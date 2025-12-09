@@ -181,7 +181,13 @@ describe('KarmaPhala', () => {
       // Simulate 60 seconds and 5 files
       jest.advanceTimersByTime(60000);
 
-      const result = await karmaPhala.completeMilestone(['f1.ts', 'f2.ts', 'f3.ts', 'f4.ts', 'f5.ts']);
+      const result = await karmaPhala.completeMilestone([
+        'f1.ts',
+        'f2.ts',
+        'f3.ts',
+        'f4.ts',
+        'f5.ts',
+      ]);
 
       expect(result.score).toBeGreaterThan(0);
       expect(result.score).toBeLessThanOrEqual(100);
@@ -239,4 +245,3 @@ describe('KarmaPhala', () => {
     });
   });
 });
-

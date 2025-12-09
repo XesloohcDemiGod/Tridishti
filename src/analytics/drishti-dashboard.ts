@@ -148,48 +148,40 @@ export class DrishtiDashboard {
    */
   public getMetrics(activeYatra?: IYatra): IDashboardMetrics {
     const currentActiveYatra = activeYatra || this.activeYatra;
-    const completedYatras = this.yatras.filter((y) => y.endedAt);
+    const completedYatras = this.yatras.filter(y => y.endedAt);
     // Count checkpoints from events if no yatras exist
     const eventCheckpoints = this.events.filter(e => e.type === 'checkpoint').length;
-    const yatraCheckpoints = this.yatras.reduce(
-      (sum, y) => sum + y.checkpoints.length,
-      0
-    ) + (currentActiveYatra?.checkpoints.length || 0);
+    const yatraCheckpoints =
+      this.yatras.reduce((sum, y) => sum + y.checkpoints.length, 0) +
+      (currentActiveYatra?.checkpoints.length || 0);
     const totalCheckpoints = Math.max(eventCheckpoints, yatraCheckpoints);
 
     // Count milestones from events if no yatras exist
     const eventMilestones = this.events.filter(e => e.type === 'milestone').length;
-    const yatraMilestones = this.yatras.reduce(
-      (sum, y) => sum + y.milestones.length,
-      0
-    ) + (currentActiveYatra?.milestones.length || 0);
+    const yatraMilestones =
+      this.yatras.reduce((sum, y) => sum + y.milestones.length, 0) +
+      (currentActiveYatra?.milestones.length || 0);
     const totalMilestones = Math.max(eventMilestones, yatraMilestones);
 
     // Count dharma alerts from events if no yatras exist
     const eventDharmaAlerts = this.events.filter(e => e.type === 'dharma_alert').length;
-    const yatraDharmaAlerts = this.yatras.reduce(
-      (sum, y) => sum + y.dharmaAlerts.length,
-      0
-    ) + (currentActiveYatra?.dharmaAlerts.length || 0);
+    const yatraDharmaAlerts =
+      this.yatras.reduce((sum, y) => sum + y.dharmaAlerts.length, 0) +
+      (currentActiveYatra?.dharmaAlerts.length || 0);
     const totalDharmaAlerts = Math.max(eventDharmaAlerts, yatraDharmaAlerts);
     // totalDharmaAlerts is calculated above
 
     const averageSessionDuration =
       completedYatras.length > 0
         ? completedYatras.reduce((sum, y) => {
-            const duration =
-              y.endedAt && y.startedAt
-                ? (y.endedAt - y.startedAt) / 1000 / 60
-                : 0;
+            const duration = y.endedAt && y.startedAt ? (y.endedAt - y.startedAt) / 1000 / 60 : 0;
             return sum + duration;
           }, 0) / completedYatras.length
         : 0;
 
     const productivityScore = this.calculateProductivityScore();
 
-    const recentActivity = this.events
-      .slice(-10)
-      .sort((a, b) => b.timestamp - a.timestamp);
+    const recentActivity = this.events.slice(-10).sort((a, b) => b.timestamp - a.timestamp);
 
     return {
       totalYatras: this.yatras.length,
@@ -210,13 +202,9 @@ export class DrishtiDashboard {
    */
   public getHealthStatus(): IHealthStatus {
     const lastEventTime =
-      this.events.length > 0
-        ? this.events[this.events.length - 1].timestamp
-        : undefined;
+      this.events.length > 0 ? this.events[this.events.length - 1].timestamp : undefined;
 
-    const timeSinceLastEvent = lastEventTime
-      ? Date.now() - lastEventTime
-      : 0; // Default to 0 for no events (healthy)
+    const timeSinceLastEvent = lastEventTime ? Date.now() - lastEventTime : 0; // Default to 0 for no events (healthy)
 
     // Determine overall status
     let status: 'healthy' | 'degraded' | 'unhealthy' = 'healthy';
@@ -280,7 +268,7 @@ export class DrishtiDashboard {
       return 0;
     }
 
-    const completedYatras = this.yatras.filter((y) => y.endedAt);
+    const completedYatras = this.yatras.filter(y => y.endedAt);
     if (completedYatras.length === 0) {
       return 50;
     }
@@ -289,20 +277,17 @@ export class DrishtiDashboard {
 
     // Checkpoints per session
     const avgCheckpoints =
-      completedYatras.reduce((sum, y) => sum + y.checkpoints.length, 0) /
-      completedYatras.length;
+      completedYatras.reduce((sum, y) => sum + y.checkpoints.length, 0) / completedYatras.length;
     score += Math.min(avgCheckpoints * 5, 20);
 
     // Milestones per session
     const avgMilestones =
-      completedYatras.reduce((sum, y) => sum + y.milestones.length, 0) /
-      completedYatras.length;
+      completedYatras.reduce((sum, y) => sum + y.milestones.length, 0) / completedYatras.length;
     score += Math.min(avgMilestones * 10, 20);
 
     // Dharma alerts reduce score
     const avgAlerts =
-      completedYatras.reduce((sum, y) => sum + y.dharmaAlerts.length, 0) /
-      completedYatras.length;
+      completedYatras.reduce((sum, y) => sum + y.dharmaAlerts.length, 0) / completedYatras.length;
     score -= Math.min(avgAlerts * 5, 30);
 
     // Jnana capture adds to score

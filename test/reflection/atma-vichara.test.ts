@@ -14,10 +14,11 @@ describe('AtmaVichara', () => {
       enabled: true,
       autoReflect: false,
       promptTemplates: {
-        start: 'Welcome to Atma Vichara (self-inquiry). Let\'s reflect on your coding session.',
+        start: "Welcome to Atma Vichara (self-inquiry). Let's reflect on your coding session.",
         achievements: 'What achievements stand out from this session?',
         improvements: 'What could be improved in your workflow?',
-        closing: 'Thank you for taking time to reflect. May your next session be even more aligned.',
+        closing:
+          'Thank you for taking time to reflect. May your next session be even more aligned.',
       },
     };
     atmaVichara = new AtmaVichara(config);
@@ -106,7 +107,9 @@ describe('AtmaVichara', () => {
         startedAt: Date.now() - 1800000,
         endedAt: Date.now(),
         checkpoints: [{ id: 'cp1', timestamp: Date.now() - 900000, filesChanged: [] }],
-        milestones: [{ id: 'm1', name: 'UI complete', status: 'completed', createdAt: Date.now() - 1200000 }],
+        milestones: [
+          { id: 'm1', name: 'UI complete', status: 'completed', createdAt: Date.now() - 1200000 },
+        ],
         dharmaAlerts: [],
       };
 
@@ -155,7 +158,11 @@ describe('AtmaVichara', () => {
 
     it('should analyze scattered change pattern', () => {
       const checkpoints = [
-        { id: 'cp1', timestamp: 1000, filesChanged: ['file1.ts', 'file2.ts', 'file3.ts', 'file4.ts', 'file5.ts', 'file6.ts'] },
+        {
+          id: 'cp1',
+          timestamp: 1000,
+          filesChanged: ['file1.ts', 'file2.ts', 'file3.ts', 'file4.ts', 'file5.ts', 'file6.ts'],
+        },
       ];
 
       const analysis = atmaVichara.analyzeDiffs(checkpoints);
@@ -193,9 +200,7 @@ describe('AtmaVichara', () => {
         startedAt: Date.now() - 7200000, // 2 hours
         endedAt: Date.now(),
         checkpoints: Array(10).fill({ id: 'cp', timestamp: Date.now(), filesChanged: [] }),
-        milestones: [
-          { id: 'm1', name: 'Complete', status: 'completed', createdAt: Date.now() },
-        ],
+        milestones: [{ id: 'm1', name: 'Complete', status: 'completed', createdAt: Date.now() }],
         dharmaAlerts: [],
       };
 
@@ -298,7 +303,9 @@ describe('AtmaVichara', () => {
 
       const reflection = atmaVichara.reflect(mockYatra);
 
-      expect(reflection.achievements.some(a => a.includes('Consistent checkpoint discipline'))).toBe(true);
+      expect(
+        reflection.achievements.some(a => a.includes('Consistent checkpoint discipline'))
+      ).toBe(true);
       expect(reflection.achievements.some(a => a.includes('milestone'))).toBe(true);
     });
 
@@ -318,4 +325,3 @@ describe('AtmaVichara', () => {
     });
   });
 });
-

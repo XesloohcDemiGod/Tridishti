@@ -5,7 +5,12 @@
  * UI components render correctly and maintain consistent structure.
  */
 
-import { getYatraWebviewContent, getDrishtiWebviewContent, getAtmaVicharaWebviewContent, getDharmaAlertWebviewContent } from '../../src/extension';
+import {
+  getYatraWebviewContent,
+  getDrishtiWebviewContent,
+  getAtmaVicharaWebviewContent,
+  getDharmaAlertWebviewContent,
+} from '../../src/extension';
 import { IYatra, ISutraCheckpoint, IMilestone, IDharmaSankata } from '../../src/core/types';
 
 describe('UI Component Snapshots', () => {
@@ -220,13 +225,8 @@ describe('UI Component Snapshots', () => {
         'Maintained 3 checkpoints, showing consistent workflow',
         'Captured 2 knowledge artifacts',
       ],
-      improvements: [
-        'Consider breaking work into smaller chunks',
-      ],
-      achievements: [
-        'Completed 2 milestones',
-        'Maintained consistent checkpoint discipline',
-      ],
+      improvements: ['Consider breaking work into smaller chunks'],
+      achievements: ['Completed 2 milestones', 'Maintained consistent checkpoint discipline'],
       suggestions: [
         'Consider setting a Sankalpa for your next session',
         'Try capturing knowledge artifacts during your next session',
@@ -235,7 +235,7 @@ describe('UI Component Snapshots', () => {
     };
 
     const mockPrompts = [
-      'Welcome to Atma Vichara (self-inquiry). Let\'s reflect on your coding session.',
+      "Welcome to Atma Vichara (self-inquiry). Let's reflect on your coding session.",
       'Your Sankalpa (intention) was: "Build feature"',
       'Did you stay aligned with this intention?',
       'What achievements stand out from this session?',
@@ -313,7 +313,8 @@ describe('UI Component Snapshots', () => {
         currentGoal: 'implement login',
         detectedGoal: 'payment-system',
       },
-      suggestion: 'Your current work seems to diverge from your stated goal: "implement login". Consider realigning or updating your goal.',
+      suggestion:
+        'Your current work seems to diverge from your stated goal: "implement login". Consider realigning or updating your goal.',
     };
 
     it('should render dharma alert with full details', () => {
@@ -337,7 +338,7 @@ describe('UI Component Snapshots', () => {
           filesChanged: 15,
           threshold: 10,
         },
-        suggestion: 'You\'ve modified 15 files, which exceeds the threshold of 10.',
+        suggestion: "You've modified 15 files, which exceeds the threshold of 10.",
       };
 
       const html = getDharmaAlertWebviewContent(fileThresholdSankata);
@@ -357,7 +358,8 @@ describe('UI Component Snapshots', () => {
           filesChanged: 6,
           threshold: 10,
         },
-        suggestion: 'Rapid file changes detected. This might indicate context switching or scope creep.',
+        suggestion:
+          'Rapid file changes detected. This might indicate context switching or scope creep.',
       };
 
       const html = getDharmaAlertWebviewContent(timeAnomalySankata);
@@ -476,27 +478,33 @@ describe('UI Component Snapshots', () => {
         id: 'large-yatra',
         sankalpa: 'Large project',
         startedAt: Date.now() - 3600000,
-        checkpoints: Array(50).fill(null).map((_, i) => ({
-          id: `cp${i}`,
-          timestamp: Date.now() - (50 - i) * 60000,
-          message: `Checkpoint ${i}`,
-          filesChanged: [`file${i}.ts`],
-        })),
-        milestones: Array(20).fill(null).map((_, i) => ({
-          id: `m${i}`,
-          name: `Milestone ${i}`,
-          createdAt: Date.now() - (20 - i) * 180000,
-          status: i % 2 === 0 ? 'completed' : 'active',
-        })),
-        dharmaAlerts: Array(10).fill(null).map((_, i) => ({
-          detected: i % 2 === 0,
-          timestamp: Date.now() - (10 - i) * 300000,
-          reason: 'file_threshold',
-          details: {
-            filesChanged: 5 + i,
-            threshold: 10,
-          },
-        })),
+        checkpoints: Array(50)
+          .fill(null)
+          .map((_, i) => ({
+            id: `cp${i}`,
+            timestamp: Date.now() - (50 - i) * 60000,
+            message: `Checkpoint ${i}`,
+            filesChanged: [`file${i}.ts`],
+          })),
+        milestones: Array(20)
+          .fill(null)
+          .map((_, i) => ({
+            id: `m${i}`,
+            name: `Milestone ${i}`,
+            createdAt: Date.now() - (20 - i) * 180000,
+            status: i % 2 === 0 ? 'completed' : 'active',
+          })),
+        dharmaAlerts: Array(10)
+          .fill(null)
+          .map((_, i) => ({
+            detected: i % 2 === 0,
+            timestamp: Date.now() - (10 - i) * 300000,
+            reason: 'file_threshold',
+            details: {
+              filesChanged: 5 + i,
+              threshold: 10,
+            },
+          })),
       };
 
       const html = getYatraWebviewContent(largeYatra);

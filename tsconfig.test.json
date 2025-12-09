@@ -1,20 +1,13 @@
 {
-    "extends": "./tsconfig.json",
-    "compilerOptions": {
-      "rootDir": ".",
-      "outDir": "out-test",
-      "types": ["jest", "node"],
-      "esModuleInterop": true,
-      "allowSyntheticDefaultImports": true,
-      "resolveJsonModule": true
-    },
-    "include": [
-      "src/**/*",
-      "test/**/*"
-    ],
-    "exclude": [
-      "node_modules",
-      ".vscode-test",
-      "out"
-    ]
-  }
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "outDir": "out-test",
+    "types": ["jest", "node"],
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true
+  },
+  "include": ["src/**/*", "test/**/*"],
+  "exclude": ["node_modules", ".vscode-test", "out"]
+}

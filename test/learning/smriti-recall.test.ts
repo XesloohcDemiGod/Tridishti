@@ -55,9 +55,17 @@ describe('SmritiRecall', () => {
 
   describe('search functionality', () => {
     beforeEach(async () => {
-      const jnana1 = jnanaCapture.captureInsight('React hooks are powerful', undefined, ['react', 'hooks']);
-      const jnana2 = jnanaCapture.capturePattern('Factory pattern for parsers', undefined, ['design-patterns']);
-      const jnana3 = jnanaCapture.captureGotcha('Array.splice modifies original', undefined, ['javascript', 'arrays']);
+      const jnana1 = jnanaCapture.captureInsight('React hooks are powerful', undefined, [
+        'react',
+        'hooks',
+      ]);
+      const jnana2 = jnanaCapture.capturePattern('Factory pattern for parsers', undefined, [
+        'design-patterns',
+      ]);
+      const jnana3 = jnanaCapture.captureGotcha('Array.splice modifies original', undefined, [
+        'javascript',
+        'arrays',
+      ]);
 
       await smritiRecall.save(jnana1);
       await smritiRecall.save(jnana2);
@@ -109,7 +117,10 @@ describe('SmritiRecall', () => {
       const insight = jnanaCapture.captureInsight('Insight content');
       const gotcha = jnanaCapture.captureGotcha('Gotcha content');
       const pattern = jnanaCapture.capturePattern('Pattern content', undefined, ['tag1']);
-      const solution = jnanaCapture.captureSolution('Solution content', undefined, ['tag1', 'tag2']);
+      const solution = jnanaCapture.captureSolution('Solution content', undefined, [
+        'tag1',
+        'tag2',
+      ]);
 
       await smritiRecall.save(insight);
       await smritiRecall.save(gotcha);
@@ -259,4 +270,3 @@ describe('SmritiRecall', () => {
     });
   });
 });
-

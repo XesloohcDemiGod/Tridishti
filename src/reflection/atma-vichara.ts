@@ -95,13 +95,11 @@ export class AtmaVichara {
     }
 
     if (yatra.checkpoints.length > 0) {
-      prompts.push(
-        `You created ${yatra.checkpoints.length} checkpoints during this session.`
-      );
+      prompts.push(`You created ${yatra.checkpoints.length} checkpoints during this session.`);
     }
 
     if (yatra.milestones.length > 0) {
-      const completed = yatra.milestones.filter((m) => m.status === 'completed');
+      const completed = yatra.milestones.filter(m => m.status === 'completed');
       prompts.push(
         `You completed ${completed.length} out of ${yatra.milestones.length} milestones.`
       );
@@ -140,8 +138,7 @@ export class AtmaVichara {
     const totalFilesChanged = uniqueFiles.size;
     const avgFilesPerCheckpoint =
       checkpoints.length > 0
-        ? checkpoints.reduce((sum, cp) => sum + cp.filesChanged.length, 0) /
-          checkpoints.length
+        ? checkpoints.reduce((sum, cp) => sum + cp.filesChanged.length, 0) / checkpoints.length
         : 0;
 
     let changePattern: 'focused' | 'scattered' | 'iterative' = 'focused';
@@ -167,9 +164,10 @@ export class AtmaVichara {
   private generateInsights(yatra: IYatra, capturedJnana?: IJnana[]): string[] {
     const insights: string[] = [];
 
-    const duration = yatra.endedAt && yatra.startedAt
-      ? Math.floor((yatra.endedAt - yatra.startedAt) / 1000 / 60)
-      : 0;
+    const duration =
+      yatra.endedAt && yatra.startedAt
+        ? Math.floor((yatra.endedAt - yatra.startedAt) / 1000 / 60)
+        : 0;
 
     if (duration > 0) {
       insights.push(`Session duration: ${duration} minutes`);
@@ -231,13 +229,9 @@ export class AtmaVichara {
   private generateAchievements(yatra: IYatra): string[] {
     const achievements: string[] = [];
 
-    const completedMilestones = yatra.milestones.filter(
-      (m) => m.status === 'completed'
-    );
+    const completedMilestones = yatra.milestones.filter(m => m.status === 'completed');
     if (completedMilestones.length > 0) {
-      achievements.push(
-        `Completed ${completedMilestones.length} milestone(s)`
-      );
+      achievements.push(`Completed ${completedMilestones.length} milestone(s)`);
     }
 
     if (yatra.checkpoints.length >= 5) {
@@ -257,10 +251,7 @@ export class AtmaVichara {
    * @param capturedJnana Optional captured knowledge
    * @returns Array of suggestion strings
    */
-  private generateSuggestions(
-    yatra: IYatra,
-    capturedJnana?: IJnana[]
-  ): string[] {
+  private generateSuggestions(yatra: IYatra, capturedJnana?: IJnana[]): string[] {
     const suggestions: string[] = [];
 
     if (!yatra.sankalpa) {
@@ -275,9 +266,7 @@ export class AtmaVichara {
 
     const diffAnalysis = this.analyzeDiffs(yatra.checkpoints);
     if (diffAnalysis.changePattern === 'iterative') {
-      suggestions.push(
-        'Your iterative change pattern is good. Continue refining your approach.'
-      );
+      suggestions.push('Your iterative change pattern is good. Continue refining your approach.');
     }
 
     return suggestions;
@@ -295,9 +284,7 @@ export class AtmaVichara {
     score += Math.min(yatra.checkpoints.length * 5, 20);
 
     // Completed milestones contribute
-    const completedMilestones = yatra.milestones.filter(
-      (m) => m.status === 'completed'
-    );
+    const completedMilestones = yatra.milestones.filter(m => m.status === 'completed');
     score += Math.min(completedMilestones.length * 10, 20);
 
     // Dharma alerts reduce score

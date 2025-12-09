@@ -66,7 +66,7 @@ export class YatraManager {
     this.stateStorage = stateStorage;
 
     // Subscribe to module events
-    eventEmitter.event((event) => {
+    eventEmitter.event(event => {
       this.handleCoreEvent(event);
     });
   }
@@ -248,22 +248,22 @@ export class YatraManager {
     }
 
     this.sankalpaReminderId = setInterval(() => {
-      vscode.window.showInformationMessage(
-        `Sankalpa reminder: ${sankalpa}`,
-        'Update Sankalpa',
-        'Dismiss'
-      ).then((selection) => {
-        if (selection === 'Update Sankalpa' && this.currentYatra) {
-          vscode.window.showInputBox({
-            prompt: 'Update your Sankalpa (intention)',
-            value: sankalpa,
-          }).then((newSankalpa) => {
-            if (newSankalpa) {
-              this.updateSankalpa(newSankalpa);
-            }
-          });
-        }
-      });
+      vscode.window
+        .showInformationMessage(`Sankalpa reminder: ${sankalpa}`, 'Update Sankalpa', 'Dismiss')
+        .then(selection => {
+          if (selection === 'Update Sankalpa' && this.currentYatra) {
+            vscode.window
+              .showInputBox({
+                prompt: 'Update your Sankalpa (intention)',
+                value: sankalpa,
+              })
+              .then(newSankalpa => {
+                if (newSankalpa) {
+                  this.updateSankalpa(newSankalpa);
+                }
+              });
+          }
+        });
     }, this.config.sankalpaReminderInterval * 1000);
   }
 

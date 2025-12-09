@@ -16,12 +16,12 @@ import * as vscode from 'vscode';
 (global as any).testUtils = {
   mockVSCode: vscode,
   createMockEventEmitter: () => ({
-    event: jest.fn((callback) => {
+    event: jest.fn(callback => {
       // Store the callback for later firing
       (global as any).testUtils.currentEventCallback = callback;
       return { dispose: jest.fn() };
     }),
-    fire: jest.fn((event) => {
+    fire: jest.fn(event => {
       // Fire the stored callback if it exists
       if ((global as any).testUtils.currentEventCallback) {
         (global as any).testUtils.currentEventCallback(event);
@@ -34,4 +34,3 @@ import * as vscode from 'vscode';
     update: jest.fn().mockResolvedValue(undefined),
   }),
 };
-

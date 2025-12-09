@@ -73,7 +73,7 @@ class MemoryKnowledgeStore implements IKnowledgeStore {
       const jnana = smriti.jnana;
       if (
         jnana.content.toLowerCase().includes(lowerQuery) ||
-        jnana.tags?.some((tag) => tag.toLowerCase().includes(lowerQuery)) ||
+        jnana.tags?.some(tag => tag.toLowerCase().includes(lowerQuery)) ||
         jnana.category.toLowerCase().includes(lowerQuery)
       ) {
         smriti.accessedAt = Date.now();
@@ -90,7 +90,7 @@ class MemoryKnowledgeStore implements IKnowledgeStore {
    * @returns Array of all jnana
    */
   public async getAll(): Promise<IJnana[]> {
-    return Array.from(this.storage.values()).map((smriti) => smriti.jnana);
+    return Array.from(this.storage.values()).map(smriti => smriti.jnana);
   }
 
   /**
@@ -154,7 +154,7 @@ export class SmritiRecall {
    */
   public async recallByCategory(category: string): Promise<IJnana[]> {
     const all = await this.recallAll();
-    return all.filter((jnana) => jnana.category === category);
+    return all.filter(jnana => jnana.category === category);
   }
 
   /**
@@ -164,7 +164,7 @@ export class SmritiRecall {
    */
   public async recallByTag(tag: string): Promise<IJnana[]> {
     const all = await this.recallAll();
-    return all.filter((jnana) => jnana.tags?.includes(tag));
+    return all.filter(jnana => jnana.tags?.includes(tag));
   }
 
   /**

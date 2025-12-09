@@ -176,10 +176,14 @@ export class KarmaPhala {
    */
   public getNudgeMessage(): string {
     const messages: Record<string, string> = {
-      default: 'You\'ve been coding for a while. Consider creating a milestone to track your progress.',
-      'deep-work': 'Deep work session detected. Capture this milestone to preserve your flow state insights.',
-      exploration: 'Exploration phase detected. Mark this milestone to track your learning journey.',
-      maintenance: 'Maintenance work detected. Create a milestone to document the improvements made.',
+      default:
+        "You've been coding for a while. Consider creating a milestone to track your progress.",
+      'deep-work':
+        'Deep work session detected. Capture this milestone to preserve your flow state insights.',
+      exploration:
+        'Exploration phase detected. Mark this milestone to track your learning journey.',
+      maintenance:
+        'Maintenance work detected. Create a milestone to document the improvements made.',
     };
 
     return messages[this.config.nudgeStrategy] || messages.default;

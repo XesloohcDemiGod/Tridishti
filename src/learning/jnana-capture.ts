@@ -162,9 +162,7 @@ export class JnanaCapture {
    * @returns Array of jnana in the category
    */
   public getJnanaByCategory(category: JnanaCategory): IJnana[] {
-    return Array.from(this.capturedJnana.values()).filter(
-      (jnana) => jnana.category === category
-    );
+    return Array.from(this.capturedJnana.values()).filter(jnana => jnana.category === category);
   }
 
   /**
@@ -173,9 +171,7 @@ export class JnanaCapture {
    * @returns Array of jnana with the tag
    */
   public getJnanaByTag(tag: string): IJnana[] {
-    return Array.from(this.capturedJnana.values()).filter(
-      (jnana) => jnana.tags?.includes(tag)
-    );
+    return Array.from(this.capturedJnana.values()).filter(jnana => jnana.tags?.includes(tag));
   }
 
   /**

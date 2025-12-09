@@ -82,9 +82,7 @@ describe('YatraManager', () => {
     it('should throw error when starting yatra while one is active', async () => {
       await yatraManager.startYatra();
 
-      await expect(yatraManager.startYatra()).rejects.toThrow(
-        'A yatra is already active'
-      );
+      await expect(yatraManager.startYatra()).rejects.toThrow('A yatra is already active');
     });
 
     it('should end a yatra', async () => {
@@ -116,9 +114,7 @@ describe('YatraManager', () => {
     });
 
     it('should throw error when ending yatra with none active', async () => {
-      await expect(yatraManager.endYatra()).rejects.toThrow(
-        'No active yatra to end'
-      );
+      await expect(yatraManager.endYatra()).rejects.toThrow('No active yatra to end');
     });
   });
 
@@ -145,9 +141,7 @@ describe('YatraManager', () => {
     });
 
     it('should throw error when updating sankalpa with no active yatra', () => {
-      expect(() => yatraManager.updateSankalpa('Goal')).toThrow(
-        'No active yatra to update'
-      );
+      expect(() => yatraManager.updateSankalpa('Goal')).toThrow('No active yatra to update');
     });
   });
 
@@ -343,4 +337,3 @@ describe('YatraManager', () => {
     });
   });
 });
-

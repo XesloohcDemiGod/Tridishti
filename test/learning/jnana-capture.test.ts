@@ -42,10 +42,10 @@ describe('JnanaCapture', () => {
     });
 
     it('should capture gotcha', () => {
-      const jnana = jnanaCapture.captureGotcha(
-        'Array.splice modifies the original array',
-        { file: 'array-helpers.ts', line: 15 }
-      );
+      const jnana = jnanaCapture.captureGotcha('Array.splice modifies the original array', {
+        file: 'array-helpers.ts',
+        line: 15,
+      });
 
       expect(jnana.category).toBe('gotcha');
       expect(jnana.content).toBe('Array.splice modifies the original array');
@@ -60,9 +60,7 @@ describe('JnanaCapture', () => {
     });
 
     it('should capture solution', () => {
-      const jnana = jnanaCapture.captureSolution(
-        'Use memoization to cache expensive computations'
-      );
+      const jnana = jnanaCapture.captureSolution('Use memoization to cache expensive computations');
 
       expect(jnana.category).toBe('solution');
     });
@@ -248,4 +246,3 @@ describe('JnanaCapture', () => {
     });
   });
 });
-

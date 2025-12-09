@@ -1,25 +1,25 @@
-
 # 📑 Tridishti Technical Feature Specification
 
 ## 1. 🎯 Project Identity
-- **Name:** Tridishti  
-- **Tagline:** *Code with threefold vision — knowledge, action, reflection.*  
+
+- **Name:** Tridishti
+- **Tagline:** _Code with threefold vision — knowledge, action, reflection._
 - **Philosophy:** Inspired by the Bhagavad Gita and Puranic principles, Tridishti integrates **Jnana (knowledge)**, **Karma (action)**, and **Bhakti (reflection)** into developer workflows.
 
 ---
 
 ## 2. 🧱 Core Modules
 
-| Module | Sanskrit Concept | Purpose | Key Features |
-|--------|-----------------|----------|--------------|
-| **SutraCheckpoints** | Sutra (thread) | Periodic checkpoints | Configurable interval, auto‑commit option |
-| **KarmaPhala** | Fruits of action | Milestone tracking | Git tags, milestone nudges |
-| **DharmaSankata** | Crisis of purpose | Scope drift detection | File change threshold, goal alignment |
-| **YatraManager** | Journey | Session lifecycle | Start/stop sessions, Sankalpa reminders |
-| **JnanaCapture** | Knowledge | Insight logging | Categories: insight, gotcha, solution, pattern |
-| **SmritiRecall** | Memory | Context recovery | Auto‑save, restore last state |
-| **AtmaVichara** | Self‑inquiry | Reflection | Guided prompts, end‑session review |
-| **DrishtiDashboard** | Vision | Analytics | Heatmaps, productivity trends, Sankalpa alignment |
+| Module               | Sanskrit Concept  | Purpose               | Key Features                                      |
+| -------------------- | ----------------- | --------------------- | ------------------------------------------------- |
+| **SutraCheckpoints** | Sutra (thread)    | Periodic checkpoints  | Configurable interval, auto‑commit option         |
+| **KarmaPhala**       | Fruits of action  | Milestone tracking    | Git tags, milestone nudges                        |
+| **DharmaSankata**    | Crisis of purpose | Scope drift detection | File change threshold, goal alignment             |
+| **YatraManager**     | Journey           | Session lifecycle     | Start/stop sessions, Sankalpa reminders           |
+| **JnanaCapture**     | Knowledge         | Insight logging       | Categories: insight, gotcha, solution, pattern    |
+| **SmritiRecall**     | Memory            | Context recovery      | Auto‑save, restore last state                     |
+| **AtmaVichara**      | Self‑inquiry      | Reflection            | Guided prompts, end‑session review                |
+| **DrishtiDashboard** | Vision            | Analytics             | Heatmaps, productivity trends, Sankalpa alignment |
 
 ---
 
@@ -79,29 +79,28 @@ MEMORY NOTES:
 
 ## 5. 📝 Memory Notes for Development
 
-- **Consistency:** All commands, configs, and docs must use `tridishti.*` namespace.  
-- **Philosophy:** Every feature maps to Jnana, Karma, or Bhakti.  
-- **Error Prevention:**  
-  - Validate JSON schemas.  
-  - Ensure TypeScript strict mode compliance.  
-  - Run ESLint + Prettier before commits.  
-- **Extensibility:**  
-  - Plugin hooks: `onCheckpoint`, `onMilestone`, `onReflection`.  
-  - Export system: Markdown, JSON, CSV, HTML.  
-- **Testing:**  
-  - Jest unit tests for each module.  
-  - Target >80% coverage.  
+- **Consistency:** All commands, configs, and docs must use `tridishti.*` namespace.
+- **Philosophy:** Every feature maps to Jnana, Karma, or Bhakti.
+- **Error Prevention:**
+  - Validate JSON schemas.
+  - Ensure TypeScript strict mode compliance.
+  - Run ESLint + Prettier before commits.
+- **Extensibility:**
+  - Plugin hooks: `onCheckpoint`, `onMilestone`, `onReflection`.
+  - Export system: Markdown, JSON, CSV, HTML.
+- **Testing:**
+  - Jest unit tests for each module.
+  - Target >80% coverage.
 
 ---
 
 ## 6. 🚀 Roadmap Alignment
 
-- **Phase 1:** Refactor modules (done).  
-- **Phase 2:** Persistence + plugin system.  
-- **Phase 3:** UX (timeline, onboarding, Sankalpa reminders).  
-- **Phase 4:** Advanced analytics (Drishti).  
-- **Phase 5:** Integrations (GitHub, Obsidian, time tracking).  
-- **Phase 6:** Branding (chakra logo, triadic palette).  
-- **Phase 7:** AI insights (scope drift prediction, session summarizer).  
-- **Phase 8:** Team collaboration (shared sutras, cloud sync).  
-
+- **Phase 1:** Refactor modules (done).
+- **Phase 2:** Persistence + plugin system.
+- **Phase 3:** UX (timeline, onboarding, Sankalpa reminders).
+- **Phase 4:** Advanced analytics (Drishti).
+- **Phase 5:** Integrations (GitHub, Obsidian, time tracking).
+- **Phase 6:** Branding (chakra logo, triadic palette).
+- **Phase 7:** AI insights (scope drift prediction, session summarizer).
+- **Phase 8:** Team collaboration (shared sutras, cloud sync).

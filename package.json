@@ -52,15 +52,21 @@
   "jest": {
     "preset": "ts-jest",
     "testEnvironment": "node",
-    "roots": ["<rootDir>/src", "<rootDir>/test"],
+    "roots": [
+      "<rootDir>/src",
+      "<rootDir>/test"
+    ],
     "testMatch": [
       "**/__tests__/**/*.+(ts|tsx|js)",
       "**/*.(test|spec).+(ts|tsx|js)"
     ],
     "transform": {
-      "^.+\\.(ts|tsx)$": ["ts-jest", {
-        "tsconfig": "tsconfig.test.json"
-      }]
+      "^.+\\.(ts|tsx)$": [
+        "ts-jest",
+        {
+          "tsconfig": "tsconfig.test.json"
+        }
+      ]
     },
     "moduleNameMapper": {
       "^vscode$": "<rootDir>/test/__mocks__/vscode.ts"
@@ -70,9 +76,22 @@
       "!src/**/*.d.ts"
     ],
     "coverageDirectory": "__coverage__",
-    "coverageReporters": ["text", "lcov", "html"],
-    "moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json", "node"],
-    "setupFilesAfterEnv": ["<rootDir>/test/setup.ts"]
+    "coverageReporters": [
+      "text",
+      "lcov",
+      "html"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ],
+    "setupFilesAfterEnv": [
+      "<rootDir>/test/setup.ts"
+    ]
   },
   "contributes": {
     "commands": [

@@ -85,24 +85,25 @@ export function activate(context: vscode.ExtensionContext): void {
   const jnanaCaptureConfig: IJnanaCaptureConfig = {
     enabled: config.get<boolean>('enabled', true),
     categories: config.get<string[]>('learningCategories', [
-      'insight', 'gotcha', 'pattern', 'solution', 'question',
+      'insight',
+      'gotcha',
+      'pattern',
+      'solution',
+      'question',
     ]) as JnanaCategory[],
     autoCapture: false,
     defaultCategory: 'insight',
   };
 
   const jnanaCapture = new JnanaCapture(jnanaCaptureConfig);
-  const smritiRecall = new SmritiRecall(
-    { provider: 'memory' },
-    jnanaCapture
-  );
+  const smritiRecall = new SmritiRecall({ provider: 'memory' }, jnanaCapture);
 
   // Initialize reflection module
   const atmaVicharaConfig: IAtmaVicharaConfig = {
     enabled: config.get<boolean>('enabled', true),
     autoReflect: false,
     promptTemplates: {
-      start: 'Welcome to Atma Vichara (self-inquiry). Let\'s reflect on your coding session.',
+      start: "Welcome to Atma Vichara (self-inquiry). Let's reflect on your coding session.",
       achievements: 'What achievements stand out from this session?',
       improvements: 'What could be improved in your workflow?',
       closing: 'Thank you for taking time to reflect. May your next session be even more aligned.',
@@ -121,31 +122,26 @@ export function activate(context: vscode.ExtensionContext): void {
   const drishtiDashboard = new DrishtiDashboard(drishtiDashboardConfig);
 
   // Set up event subscriptions for dashboard
-  eventEmitter.event((event) => {
+  eventEmitter.event(event => {
     drishtiDashboard.recordEvent(event);
   });
 
   // Register VS Code commands
-  const createSutraCommand = vscode.commands.registerCommand(
-    'tridishti.createSutra',
-    async () => {
-      const message = await vscode.window.showInputBox({
-        prompt: 'Enter checkpoint message (optional)',
-        placeHolder: 'What are you working on?',
-      });
+  const createSutraCommand = vscode.commands.registerCommand('tridishti.createSutra', async () => {
+    const message = await vscode.window.showInputBox({
+      prompt: 'Enter checkpoint message (optional)',
+      placeHolder: 'What are you working on?',
+    });
 
-      try {
-        const checkpoint = await sutraCheckpoints.createCheckpoint(message);
-        vscode.window.showInformationMessage(
-          `Sutra checkpoint created: ${checkpoint.id}`
-        );
-      } catch (error) {
-        vscode.window.showErrorMessage(
-          `Failed to create checkpoint: ${error instanceof Error ? error.message : 'Unknown error'}`
-        );
-      }
+    try {
+      const checkpoint = await sutraCheckpoints.createCheckpoint(message);
+      vscode.window.showInformationMessage(`Sutra checkpoint created: ${checkpoint.id}`);
+    } catch (error) {
+      vscode.window.showErrorMessage(
+        `Failed to create checkpoint: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
     }
-  );
+  });
 
   const createKarmaPhalaCommand = vscode.commands.registerCommand(
     'tridishti.createKarmaPhala',
@@ -153,17 +149,15 @@ export function activate(context: vscode.ExtensionContext): void {
       const name = await vscode.window.showInputBox({
         prompt: 'Enter milestone name',
         placeHolder: 'What milestone are you reaching?',
-        validateInput: (value) => {
+        validateInput: value => {
           return value.trim().length === 0 ? 'Milestone name is required' : undefined;
-        }
+        },
       });
 
       if (name) {
         try {
           const milestone = karmaPhala.createMilestone(name.trim());
-          vscode.window.showInformationMessage(
-            `Karma Phala milestone created: ${milestone.name}`
-          );
+          vscode.window.showInformationMessage(`Karma Phala milestone created: ${milestone.name}`);
         } catch (error) {
           vscode.window.showErrorMessage(
             `Failed to create milestone: ${error instanceof Error ? error.message : 'Unknown error'}`
@@ -179,9 +173,9 @@ export function activate(context: vscode.ExtensionContext): void {
       const content = await vscode.window.showInputBox({
         prompt: 'Enter knowledge to capture',
         placeHolder: 'What insight, pattern, or solution did you discover?',
-        validateInput: (value) => {
+        validateInput: value => {
           return value.trim().length === 0 ? 'Knowledge content is required' : undefined;
-        }
+        },
       });
 
       if (content) {
@@ -195,16 +189,11 @@ export function activate(context: vscode.ExtensionContext): void {
 
         if (category) {
           try {
-            const jnana = jnanaCapture.capture(
-              content.trim(),
-              category as JnanaCategory
-            );
+            const jnana = jnanaCapture.capture(content.trim(), category as JnanaCategory);
             await smritiRecall.save(jnana);
             drishtiDashboard.recordJnana([jnana]);
 
-            vscode.window.showInformationMessage(
-              `Jnana captured: ${jnana.id} (${category})`
-            );
+            vscode.window.showInformationMessage(`Jnana captured: ${jnana.id} (${category})`);
           } catch (error) {
             vscode.window.showErrorMessage(
               `Failed to capture jnana: ${error instanceof Error ? error.message : 'Unknown error'}`
@@ -215,174 +204,169 @@ export function activate(context: vscode.ExtensionContext): void {
     }
   );
 
-  const checkDharmaCommand = vscode.commands.registerCommand(
-    'tridishti.checkDharma',
-    async () => {
-      try {
-        const sankata = await dharmaSankata.checkScope();
+  const checkDharmaCommand = vscode.commands.registerCommand('tridishti.checkDharma', async () => {
+    try {
+      const sankata = await dharmaSankata.checkScope();
 
-        if (sankata.detected) {
-          const action = await vscode.window.showWarningMessage(
-            `Dharma Sankata detected: ${sankata.reason}`,
-            'View Details',
-            'Dismiss'
-          );
-
-          if (action === 'View Details') {
-            const panel = vscode.window.createWebviewPanel(
-              'dharma-alert',
-              'Dharma Sankata Alert',
-              vscode.ViewColumn.One,
-              {}
-            );
-            panel.webview.html = getDharmaAlertWebviewContent(sankata);
-          }
-        } else {
-          vscode.window.showInformationMessage('No scope drift detected. Dharma is aligned! 🕉️');
-        }
-      } catch (error) {
-        vscode.window.showErrorMessage(
-          `Failed to check dharma: ${error instanceof Error ? error.message : 'Unknown error'}`
+      if (sankata.detected) {
+        const action = await vscode.window.showWarningMessage(
+          `Dharma Sankata detected: ${sankata.reason}`,
+          'View Details',
+          'Dismiss'
         );
-      }
-    }
-  );
 
-  const showYatraCommand = vscode.commands.registerCommand(
-    'tridishti.showYatra',
-    async () => {
-      try {
-        const yatra = yatraManager.getCurrentYatra();
-
-        if (yatra) {
+        if (action === 'View Details') {
           const panel = vscode.window.createWebviewPanel(
-            'yatra',
-            `Current Yatra: ${yatra.sankalpa || 'Untitled Session'}`,
+            'dharma-alert',
+            'Dharma Sankata Alert',
             vscode.ViewColumn.One,
-            { enableScripts: true }
+            {}
           );
-          panel.webview.html = getYatraWebviewContent(yatra);
-
-          // Handle messages from webview
-          panel.webview.onDidReceiveMessage(
-            async (message) => {
-              switch (message.type) {
-                case 'updateSankalpa':
-                  try {
-                    yatraManager.updateSankalpa(message.sankalpa);
-                    vscode.window.showInformationMessage('Sankalpa updated successfully');
-                    panel.dispose();
-                  } catch (error) {
-                    vscode.window.showErrorMessage('Failed to update Sankalpa');
-                  }
-                  break;
-              }
-            },
-            undefined,
-            context.subscriptions
-          );
-        } else {
-          vscode.window.showInformationMessage('No active yatra. Start one to begin your journey! 🚶');
+          panel.webview.html = getDharmaAlertWebviewContent(sankata);
         }
-      } catch (error) {
-        vscode.window.showErrorMessage(
-          `Failed to show yatra: ${error instanceof Error ? error.message : 'Unknown error'}`
-        );
+      } else {
+        vscode.window.showInformationMessage('No scope drift detected. Dharma is aligned! 🕉️');
       }
+    } catch (error) {
+      vscode.window.showErrorMessage(
+        `Failed to check dharma: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
     }
-  );
+  });
 
-  const showDrishtiCommand = vscode.commands.registerCommand(
-    'tridishti.showDrishti',
-    async () => {
-      try {
-        const metrics = drishtiDashboard.getMetrics(
-          yatraManager.getCurrentYatra()
-        );
-        const health = drishtiDashboard.getHealthStatus();
+  const showYatraCommand = vscode.commands.registerCommand('tridishti.showYatra', async () => {
+    try {
+      const yatra = yatraManager.getCurrentYatra();
 
+      if (yatra) {
         const panel = vscode.window.createWebviewPanel(
-          'drishti',
-          'Drishti Dashboard - Vision into Your Coding',
+          'yatra',
+          `Current Yatra: ${yatra.sankalpa || 'Untitled Session'}`,
           vscode.ViewColumn.One,
           { enableScripts: true }
         );
-        panel.webview.html = getDrishtiWebviewContent(metrics, health);
-      } catch (error) {
-        vscode.window.showErrorMessage(
-          `Failed to show dashboard: ${error instanceof Error ? error.message : 'Unknown error'}`
+        panel.webview.html = getYatraWebviewContent(yatra);
+
+        // Handle messages from webview
+        panel.webview.onDidReceiveMessage(
+          async message => {
+            switch (message.type) {
+              case 'updateSankalpa':
+                try {
+                  yatraManager.updateSankalpa(message.sankalpa);
+                  vscode.window.showInformationMessage('Sankalpa updated successfully');
+                  panel.dispose();
+                } catch (error) {
+                  vscode.window.showErrorMessage('Failed to update Sankalpa');
+                }
+                break;
+            }
+          },
+          undefined,
+          context.subscriptions
         );
-      }
-    }
-  );
-
-  const atmaVicharaCommand = vscode.commands.registerCommand(
-    'tridishti.atmaVichara',
-    async () => {
-      try {
-        const yatra = yatraManager.getCurrentYatra();
-
-        if (!yatra) {
-          vscode.window.showWarningMessage('No active yatra to reflect on. Complete a session first!');
-          return;
-        }
-
-        // End the current yatra
-        const completedYatra = await yatraManager.endYatra();
-
-        // Perform reflection
-        const capturedJnana = jnanaCapture.getAllJnana();
-        const reflection = atmaVichara.reflect(completedYatra, capturedJnana);
-        drishtiDashboard.recordReflection(reflection);
-
-        // Generate prompts
-        const prompts = atmaVichara.generatePrompts(completedYatra);
-
-        // Show reflection webview
-        const panel = vscode.window.createWebviewPanel(
-          'atmaVichara',
-          `Atma Vichara - Reflecting on "${completedYatra.sankalpa || 'Your Session'}"`,
-          vscode.ViewColumn.One,
-          { enableScripts: true }
-        );
-        panel.webview.html = getAtmaVicharaWebviewContent(reflection, prompts);
-
+      } else {
         vscode.window.showInformationMessage(
-          `Session completed! Score: ${reflection.score}/100. Take time to reflect. 🪞`
-        );
-
-      } catch (error) {
-        vscode.window.showErrorMessage(
-          `Failed to perform Atma Vichara: ${error instanceof Error ? error.message : 'Unknown error'}`
+          'No active yatra. Start one to begin your journey! 🚶'
         );
       }
+    } catch (error) {
+      vscode.window.showErrorMessage(
+        `Failed to show yatra: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
     }
-  );
+  });
+
+  const showDrishtiCommand = vscode.commands.registerCommand('tridishti.showDrishti', async () => {
+    try {
+      const metrics = drishtiDashboard.getMetrics(yatraManager.getCurrentYatra());
+      const health = drishtiDashboard.getHealthStatus();
+
+      const panel = vscode.window.createWebviewPanel(
+        'drishti',
+        'Drishti Dashboard - Vision into Your Coding',
+        vscode.ViewColumn.One,
+        { enableScripts: true }
+      );
+      panel.webview.html = getDrishtiWebviewContent(metrics, health);
+    } catch (error) {
+      vscode.window.showErrorMessage(
+        `Failed to show dashboard: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
+    }
+  });
+
+  const atmaVicharaCommand = vscode.commands.registerCommand('tridishti.atmaVichara', async () => {
+    try {
+      const yatra = yatraManager.getCurrentYatra();
+
+      if (!yatra) {
+        vscode.window.showWarningMessage(
+          'No active yatra to reflect on. Complete a session first!'
+        );
+        return;
+      }
+
+      // End the current yatra
+      const completedYatra = await yatraManager.endYatra();
+
+      // Perform reflection
+      const capturedJnana = jnanaCapture.getAllJnana();
+      const reflection = atmaVichara.reflect(completedYatra, capturedJnana);
+      drishtiDashboard.recordReflection(reflection);
+
+      // Generate prompts
+      const prompts = atmaVichara.generatePrompts(completedYatra);
+
+      // Show reflection webview
+      const panel = vscode.window.createWebviewPanel(
+        'atmaVichara',
+        `Atma Vichara - Reflecting on "${completedYatra.sankalpa || 'Your Session'}"`,
+        vscode.ViewColumn.One,
+        { enableScripts: true }
+      );
+      panel.webview.html = getAtmaVicharaWebviewContent(reflection, prompts);
+
+      vscode.window.showInformationMessage(
+        `Session completed! Score: ${reflection.score}/100. Take time to reflect. 🪞`
+      );
+    } catch (error) {
+      vscode.window.showErrorMessage(
+        `Failed to perform Atma Vichara: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
+    }
+  });
 
   // Auto-start yatra if configured
   if (yatraManagerConfig.autoStart) {
-    yatraManager.startYatra().then((yatra) => {
-      vscode.window.showInformationMessage(
-        `Yatra started automatically: ${yatra.sankalpa || 'New session'}`
-      );
-    }).catch((error) => {
-      vscode.window.showErrorMessage(
-        `Failed to auto-start yatra: ${error instanceof Error ? error.message : 'Unknown error'}`
-      );
-    });
+    yatraManager
+      .startYatra()
+      .then(yatra => {
+        vscode.window.showInformationMessage(
+          `Yatra started automatically: ${yatra.sankalpa || 'New session'}`
+        );
+      })
+      .catch(error => {
+        vscode.window.showErrorMessage(
+          `Failed to auto-start yatra: ${error instanceof Error ? error.message : 'Unknown error'}`
+        );
+      });
   } else {
     // Restore previous state if available
-    yatraManager.restoreState().then(() => {
-      const currentYatra = yatraManager.getCurrentYatra();
-      if (currentYatra) {
-        vscode.window.showInformationMessage(
-          `Previous yatra restored: ${currentYatra.sankalpa || 'Untitled session'}`
-        );
-      }
-    }).catch((error) => {
-      // Silently handle restoration errors
-      console.warn('Failed to restore yatra state:', error);
-    });
+    yatraManager
+      .restoreState()
+      .then(() => {
+        const currentYatra = yatraManager.getCurrentYatra();
+        if (currentYatra) {
+          vscode.window.showInformationMessage(
+            `Previous yatra restored: ${currentYatra.sankalpa || 'Untitled session'}`
+          );
+        }
+      })
+      .catch(error => {
+        // Silently handle restoration errors
+        console.warn('Failed to restore yatra state:', error);
+      });
   }
 
   // Register all commands and subscriptions
@@ -398,7 +382,7 @@ export function activate(context: vscode.ExtensionContext): void {
   );
 
   // Set up configuration change listener
-  const configChangeDisposable = vscode.workspace.onDidChangeConfiguration((event) => {
+  const configChangeDisposable = vscode.workspace.onDidChangeConfiguration(event => {
     if (event.affectsConfiguration('tridishti')) {
       // Reload configuration and update modules
       const newConfig = vscode.workspace.getConfiguration('tridishti');
@@ -474,25 +458,34 @@ export function getYatraWebviewContent(yatra: any): string {
 
   <div class="section">
     <h2>🧵 Sutra Checkpoints (${yatra.checkpoints.length})</h2>
-    ${yatra.checkpoints.length > 0
-      ? yatra.checkpoints.map((cp: any) => `<div class="checkpoint">${cp.message || cp.id}</div>`).join('')
-      : '<p>No checkpoints yet. Create your first with Ctrl+Shift+P → "Tridishti: Create Sutra"</p>'
+    ${
+      yatra.checkpoints.length > 0
+        ? yatra.checkpoints
+            .map((cp: any) => `<div class="checkpoint">${cp.message || cp.id}</div>`)
+            .join('')
+        : '<p>No checkpoints yet. Create your first with Ctrl+Shift+P → "Tridishti: Create Sutra"</p>'
     }
   </div>
 
   <div class="section">
     <h2>🌸 Karma Phala Milestones (${yatra.milestones.length})</h2>
-    ${yatra.milestones.length > 0
-      ? yatra.milestones.map((m: any) => `<div class="milestone">${m.name} - ${m.status}</div>`).join('')
-      : '<p>No milestones yet. Create your first with Ctrl+Shift+P → "Tridishti: Create Karma Phala Milestone"</p>'
+    ${
+      yatra.milestones.length > 0
+        ? yatra.milestones
+            .map((m: any) => `<div class="milestone">${m.name} - ${m.status}</div>`)
+            .join('')
+        : '<p>No milestones yet. Create your first with Ctrl+Shift+P → "Tridishti: Create Karma Phala Milestone"</p>'
     }
   </div>
 
   <div class="section">
     <h2>⚠️ Dharma Alerts (${yatra.dharmaAlerts.length})</h2>
-    ${yatra.dharmaAlerts.length > 0
-      ? yatra.dharmaAlerts.map((a: any) => `<div class="alert">${a.reason}: ${a.suggestion || ''}</div>`).join('')
-      : '<p>No scope drift detected. Your dharma is aligned! 🕉️</p>'
+    ${
+      yatra.dharmaAlerts.length > 0
+        ? yatra.dharmaAlerts
+            .map((a: any) => `<div class="alert">${a.reason}: ${a.suggestion || ''}</div>`)
+            .join('')
+        : '<p>No scope drift detected. Your dharma is aligned! 🕉️</p>'
     }
   </div>
 
@@ -552,12 +545,16 @@ export function getDharmaAlertWebviewContent(sankata: any): string {
     </ul>
   </div>
 
-  ${sankata.suggestion ? `
+  ${
+    sankata.suggestion
+      ? `
   <div class="suggestion">
     <h3>💡 Suggestion</h3>
     <p>${sankata.suggestion}</p>
   </div>
-  ` : ''}
+  `
+      : ''
+  }
 
   <p><em>Remember: "You have the right to perform your prescribed duties, but you are not entitled to the fruits of your actions." - Bhagavad Gita 2.47</em></p>
 </body>
@@ -574,7 +571,7 @@ export function getDrishtiWebviewContent(metrics: any, health: any): string {
   const healthColors: Record<string, string> = {
     healthy: '#4CAF50',
     degraded: '#FF9800',
-    unhealthy: '#F44336'
+    unhealthy: '#F44336',
   };
   const healthColor = healthColors[health.status] || '#666';
 
@@ -633,24 +630,32 @@ export function getDrishtiWebviewContent(metrics: any, health: any): string {
     </div>
   </div>
 
-  ${metrics.averageSessionDuration > 0 ? `
+  ${
+    metrics.averageSessionDuration > 0
+      ? `
   <div class="metrics-grid">
     <div class="metric">
       <div class="metric-value">${metrics.averageSessionDuration}</div>
       <div class="metric-label">Avg Session (min)</div>
     </div>
   </div>
-  ` : ''}
+  `
+      : ''
+  }
 
   <div class="recent-activity">
     <h3>Recent Activity</h3>
-    ${metrics.recentActivity.length > 0
-      ? metrics.recentActivity.map((event: any) =>
-          `<div class="activity-item">
+    ${
+      metrics.recentActivity.length > 0
+        ? metrics.recentActivity
+            .map(
+              (event: any) =>
+                `<div class="activity-item">
             <strong>${event.type}</strong> - ${new Date(event.timestamp).toLocaleTimeString()}
           </div>`
-        ).join('')
-      : '<p>No recent activity</p>'
+            )
+            .join('')
+        : '<p>No recent activity</p>'
     }
   </div>
 
@@ -693,17 +698,26 @@ export function getAtmaVicharaWebviewContent(reflection: any, prompts: string[])
 <body>
   <h1>🪞 Atma Vichara - Self Inquiry</h1>
 
-  ${reflection.score !== undefined ? `
+  ${
+    reflection.score !== undefined
+      ? `
     <div class="score">
       ${reflection.score}/100
       <div style="font-size: 16px; color: var(--vscode-descriptionForeground); margin-top: 10px;">
-        ${reflection.score >= 80 ? 'Excellent session! 🌟' :
-          reflection.score >= 60 ? 'Good progress made 📈' :
-          reflection.score >= 40 ? 'Room for improvement 📝' :
-          'Consider reviewing your approach 🔄'}
+        ${
+          reflection.score >= 80
+            ? 'Excellent session! 🌟'
+            : reflection.score >= 60
+              ? 'Good progress made 📈'
+              : reflection.score >= 40
+                ? 'Room for improvement 📝'
+                : 'Consider reviewing your approach 🔄'
+        }
       </div>
     </div>
-  ` : ''}
+  `
+      : ''
+  }
 
   <div class="section">
     <h2>🧘 Guided Reflection Prompts</h2>

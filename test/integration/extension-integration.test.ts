@@ -121,7 +121,7 @@ describe('Tridishti Extension Integration', () => {
     });
 
     // Connect dashboard to event emitter
-    eventEmitter.event((event) => {
+    eventEmitter.event(event => {
       drishtiDashboard.recordEvent(event);
     });
 
@@ -169,10 +169,10 @@ describe('Tridishti Extension Integration', () => {
       expect(milestone.status).toBe('active');
 
       // Capture knowledge during development
-      const insight = jnanaCapture.captureInsight(
-        'JWT tokens provide stateless authentication',
-        { file: 'auth.ts', line: 42 }
-      );
+      const insight = jnanaCapture.captureInsight('JWT tokens provide stateless authentication', {
+        file: 'auth.ts',
+        line: 42,
+      });
 
       // Record jnana in dashboard
       drishtiDashboard.recordJnana([insight]);
@@ -242,15 +242,9 @@ describe('Tridishti Extension Integration', () => {
       await karmaPhala.completeMilestone(['test.ts']);
 
       // Check that events were emitted and received
-      expect(eventSpy).toHaveBeenCalledWith(
-        expect.objectContaining({ type: 'yatra_start' })
-      );
-      expect(eventSpy).toHaveBeenCalledWith(
-        expect.objectContaining({ type: 'checkpoint' })
-      );
-      expect(eventSpy).toHaveBeenCalledWith(
-        expect.objectContaining({ type: 'milestone' })
-      );
+      expect(eventSpy).toHaveBeenCalledWith(expect.objectContaining({ type: 'yatra_start' }));
+      expect(eventSpy).toHaveBeenCalledWith(expect.objectContaining({ type: 'checkpoint' }));
+      expect(eventSpy).toHaveBeenCalledWith(expect.objectContaining({ type: 'milestone' }));
     });
 
     it('should update dashboard metrics in real-time', async () => {
@@ -401,14 +395,10 @@ describe('Tridishti Extension Integration', () => {
       );
 
       // Test error in ending yatra when none active
-      await expect(yatraManager.endYatra()).rejects.toThrow(
-        'No active yatra to end'
-      );
+      await expect(yatraManager.endYatra()).rejects.toThrow('No active yatra to end');
 
       // Test invalid sankalpa update
-      expect(() => yatraManager.updateSankalpa('test')).toThrow(
-        'No active yatra to update'
-      );
+      expect(() => yatraManager.updateSankalpa('test')).toThrow('No active yatra to update');
 
       // Test invalid recall
       const invalidRecall = await smritiRecall.recall('non-existent-id');
