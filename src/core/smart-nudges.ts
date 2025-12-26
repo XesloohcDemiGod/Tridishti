@@ -74,7 +74,7 @@ export interface INudgeStats {
  */
 export class SmartNudgeSystem {
   private config: INudgeConfig;
-  private timers: Map<NudgeType, NodeJS.Timeout> = new Map();
+  private timers: Map<NudgeType, ReturnType<typeof setInterval>> = new Map();
   private lastNudge?: INudgeEvent;
   private stats: INudgeStats = {
     totalNudges: 0,
@@ -223,7 +223,7 @@ export class SmartNudgeSystem {
       const timer = setInterval(() => {
         this.triggerNudge('checkpoint_reminder');
       }, this.config.checkpointIntervalMs);
-      this.timers.set('checkpoint_reminder', timer as unknown as NodeJS.Timeout);
+      this.timers.set('checkpoint_reminder', timer);
     }
 
     // Scope check reminders
@@ -231,7 +231,7 @@ export class SmartNudgeSystem {
       const timer = setInterval(() => {
         this.triggerNudge('scope_drift_warning');
       }, this.config.scopeCheckIntervalMs);
-      this.timers.set('scope_drift_warning', timer as unknown as NodeJS.Timeout);
+      this.timers.set('scope_drift_warning', timer);
     }
 
     // Break reminders (all strategies except deep-work)
@@ -239,14 +239,14 @@ export class SmartNudgeSystem {
       const timer = setInterval(() => {
         this.triggerNudge('break_reminder');
       }, this.config.breakReminderMs);
-      this.timers.set('break_reminder', timer as unknown as NodeJS.Timeout);
+      this.timers.set('break_reminder', timer);
     }
 
     // Sankalpa reminders
     const sankalpaTimer = setInterval(() => {
       this.triggerNudge('sankalpa_reminder');
     }, this.config.sankalpaReminderMs);
-    this.timers.set('sankalpa_reminder', sankalpaTimer as unknown as NodeJS.Timeout);
+    this.timers.set('sankalpa_reminder', sankalpaTimer);
   }
 
   /**

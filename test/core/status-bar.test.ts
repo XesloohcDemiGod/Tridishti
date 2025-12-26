@@ -43,16 +43,18 @@ describe('StatusBarIntegration', () => {
   });
 
   describe('Yatra Updates', () => {
+    // Use fixed timestamps for deterministic tests
+    const BASE_TIME = 1640000000000; // Fixed timestamp
     const mockYatra: IYatra = {
       id: 'yatra-1',
       sankalpa: 'Complete feature implementation',
-      startedAt: Date.now() - 3600000, // 1 hour ago
+      startedAt: BASE_TIME - 3600000, // 1 hour before BASE_TIME
       checkpoints: [
-        { id: 'cp1', timestamp: Date.now(), filesChanged: [] },
-        { id: 'cp2', timestamp: Date.now(), filesChanged: [] },
+        { id: 'cp1', timestamp: BASE_TIME, filesChanged: [] },
+        { id: 'cp2', timestamp: BASE_TIME, filesChanged: [] },
       ],
       milestones: [
-        { id: 'm1', name: 'Milestone 1', createdAt: Date.now(), status: 'active' },
+        { id: 'm1', name: 'Milestone 1', createdAt: BASE_TIME, status: 'active' },
       ],
       dharmaAlerts: [],
     };
@@ -79,7 +81,7 @@ describe('StatusBarIntegration', () => {
         dharmaAlerts: [
           {
             detected: true,
-            timestamp: Date.now(),
+            timestamp: BASE_TIME,
             reason: 'file_threshold',
             details: { filesChanged: 15, threshold: 10 },
           },

@@ -30,7 +30,7 @@ export interface IStatusBarConfig {
 export class StatusBarIntegration {
   private config: IStatusBarConfig;
   private statusBarItem?: vscode.StatusBarItem;
-  private updateTimer?: NodeJS.Timeout;
+  private updateTimer?: ReturnType<typeof setInterval>;
   private currentYatra?: IYatra;
 
   /**

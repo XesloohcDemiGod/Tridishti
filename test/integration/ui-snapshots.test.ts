@@ -117,12 +117,14 @@ describe('UI Component Snapshots', () => {
   });
 
   describe('Drishti Dashboard Webview', () => {
+    // Use fixed timestamps for deterministic tests
+    const BASE_TIME = 1640000000000; // Fixed timestamp
     const mockMetrics = {
       totalYatras: 5,
       activeYatra: {
         id: 'active-yatra',
         sankalpa: 'Current project',
-        startedAt: Date.now() - 1800000,
+        startedAt: BASE_TIME - 1800000,
         checkpoints: [],
         milestones: [],
         dharmaAlerts: [],
@@ -136,13 +138,13 @@ describe('UI Component Snapshots', () => {
       recentActivity: [
         {
           type: 'checkpoint' as const,
-          timestamp: Date.now() - 300000,
-          data: { id: 'cp1', timestamp: Date.now(), filesChanged: [], message: 'Test checkpoint' },
+          timestamp: BASE_TIME - 300000,
+          data: { id: 'cp1', timestamp: BASE_TIME, filesChanged: [], message: 'Test checkpoint' },
         },
         {
           type: 'milestone' as const,
-          timestamp: Date.now() - 600000,
-          data: { id: 'kp1', milestoneId: 'm1', timestamp: Date.now(), score: 85, duration: 60, filesModified: [] },
+          timestamp: BASE_TIME - 600000,
+          data: { id: 'kp1', milestoneId: 'm1', timestamp: BASE_TIME, score: 85, duration: 60, filesModified: [] },
         },
       ],
     };
@@ -158,7 +160,7 @@ describe('UI Component Snapshots', () => {
         smritiRecall: true,
         atmaVichara: true,
       },
-      lastEventTime: Date.now() - 180000,
+      lastEventTime: BASE_TIME - 180000,
     };
 
     it('should render comprehensive dashboard', () => {
