@@ -79,15 +79,16 @@ While most productivity tools focus on *what* you accomplish, **Tridishti focuse
 
 ## 🛠️ Commands Reference
 
-| Command | Shortcut | Description |
-|---------|----------|-------------|
-| Create Sutra | - | Create a checkpoint snapshot |
-| Create Karma Phala | - | Mark a milestone achievement |
-| Capture Jnana | - | Record knowledge or insights |
-| Check Dharma | - | Verify scope alignment |
-| Show Yatra | - | View current session details |
-| Show Drishti | - | Open analytics dashboard |
-| End Session | - | Guided reflection (Atma Vichara) |
+| Command | Shortcut (Windows/Linux) | Shortcut (Mac) | Description |
+|---------|--------------------------|----------------|-------------|
+| Start New Yatra | - | - | Start a new coding session |
+| Create Sutra | `Ctrl+Alt+S` | `Cmd+Alt+S` | Create a checkpoint snapshot |
+| Create Karma Phala | `Ctrl+Alt+M` | `Cmd+Alt+M` | Mark a milestone achievement |
+| Capture Jnana | `Ctrl+Alt+J` | `Cmd+Alt+J` | Record knowledge or insights |
+| Check Dharma | - | - | Verify scope alignment |
+| Show Yatra | `Ctrl+Alt+Y` | `Cmd+Alt+Y` | View current session details |
+| Show Drishti | `Ctrl+Alt+D` | `Cmd+Alt+D` | Open analytics dashboard |
+| End Session | - | - | Guided reflection (Atma Vichara) |
 
 ---
 

@@ -97,31 +97,72 @@
     "commands": [
       {
         "command": "tridishti.createSutra",
-        "title": "Create Sutra"
+        "title": "Tridishti: Create Sutra",
+        "category": "Tridishti"
       },
       {
         "command": "tridishti.createKarmaPhala",
-        "title": "Create Karma Phala Milestone"
+        "title": "Tridishti: Create Karma Phala Milestone",
+        "category": "Tridishti"
       },
       {
         "command": "tridishti.captureJnana",
-        "title": "Capture Jnana"
+        "title": "Tridishti: Capture Jnana",
+        "category": "Tridishti"
       },
       {
         "command": "tridishti.checkDharma",
-        "title": "Check Dharma Alignment"
+        "title": "Tridishti: Check Dharma Alignment",
+        "category": "Tridishti"
       },
       {
         "command": "tridishti.showYatra",
-        "title": "Show Current Yatra"
+        "title": "Tridishti: Show Current Yatra",
+        "category": "Tridishti"
       },
       {
         "command": "tridishti.showDrishti",
-        "title": "Show Drishti Dashboard"
+        "title": "Tridishti: Show Drishti Dashboard",
+        "category": "Tridishti"
       },
       {
         "command": "tridishti.atmaVichara",
-        "title": "End Session (Atma Vichara)"
+        "title": "Tridishti: End Session (Atma Vichara)",
+        "category": "Tridishti"
+      },
+      {
+        "command": "tridishti.startYatra",
+        "title": "Tridishti: Start New Yatra",
+        "category": "Tridishti"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "tridishti.createSutra",
+        "key": "ctrl+alt+s",
+        "mac": "cmd+alt+s",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "tridishti.captureJnana",
+        "key": "ctrl+alt+j",
+        "mac": "cmd+alt+j",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "tridishti.createKarmaPhala",
+        "key": "ctrl+alt+m",
+        "mac": "cmd+alt+m"
+      },
+      {
+        "command": "tridishti.showDrishti",
+        "key": "ctrl+alt+d",
+        "mac": "cmd+alt+d"
+      },
+      {
+        "command": "tridishti.showYatra",
+        "key": "ctrl+alt+y",
+        "mac": "cmd+alt+y"
       }
     ],
     "configuration": {
