@@ -346,6 +346,24 @@ export function activate(context: vscode.ExtensionContext): void {
     }
   });
 
+  const startYatraCommand = vscode.commands.registerCommand('tridishti.startYatra', async () => {
+    try {
+      const sankalpa = await vscode.window.showInputBox({
+        prompt: 'Set your Sankalpa (intention) for this session',
+        placeHolder: 'What do you want to accomplish?',
+      });
+
+      const yatra = await yatraManager.startYatra(sankalpa);
+      vscode.window.showInformationMessage(
+        `New Yatra started! Sankalpa: ${yatra.sankalpa || 'Not set'} 🚀`
+      );
+    } catch (error) {
+      vscode.window.showErrorMessage(
+        `Failed to start yatra: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
+    }
+  });
+
   // Auto-start yatra if configured
   if (yatraManagerConfig.autoStart) {
     yatraManager
@@ -387,6 +405,7 @@ export function activate(context: vscode.ExtensionContext): void {
     showYatraCommand,
     showDrishtiCommand,
     atmaVicharaCommand,
+    startYatraCommand,
     eventEmitter
   );
 
