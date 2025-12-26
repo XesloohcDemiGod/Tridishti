@@ -23,8 +23,17 @@ import { JnanaCapture, IJnanaCaptureConfig } from './learning/jnana-capture';
 import { SmritiRecall } from './learning/smriti-recall';
 import { AtmaVichara, IAtmaVicharaConfig } from './reflection/atma-vichara';
 import { DrishtiDashboard, IDrishtiDashboardConfig } from './analytics/drishti-dashboard';
-import { ICoreEvent } from './core/types';
+import { ICoreEvent, IYatra, IDharmaSankata } from './core/types';
 import { JnanaCategory } from './learning/types';
+import { IReflectionResult } from './reflection/atma-vichara';
+import { IDashboardMetrics, IHealthStatus } from './analytics/drishti-dashboard';
+
+// Type aliases for webview content
+type YatraWebviewData = IYatra;
+type DharmaSankataWebviewData = IDharmaSankata;
+type MetricsWebviewData = IDashboardMetrics;
+type HealthWebviewData = IHealthStatus;
+type ReflectionWebviewData = IReflectionResult;
 
 /**
  * Extension activation function
@@ -256,7 +265,7 @@ export function activate(context: vscode.ExtensionContext): void {
                   yatraManager.updateSankalpa(message.sankalpa);
                   vscode.window.showInformationMessage('Sankalpa updated successfully');
                   panel.dispose();
-                } catch (error) {
+                } catch {
                   vscode.window.showErrorMessage('Failed to update Sankalpa');
                 }
                 break;
@@ -398,7 +407,11 @@ export function activate(context: vscode.ExtensionContext): void {
         milestoneThreshold: newConfig.get<number>('milestoneThreshold', 120),
         autoTag: newConfig.get<boolean>('autoTag', false),
         enabled: newConfig.get<boolean>('enabled', true),
-        nudgeStrategy: newConfig.get<string>('nudgeStrategy', 'default') as any,
+        nudgeStrategy: newConfig.get<string>('nudgeStrategy', 'default') as
+          | 'default'
+          | 'deep-work'
+          | 'exploration'
+          | 'maintenance',
       });
 
       dharmaSankata.updateConfig({
@@ -443,7 +456,7 @@ function escapeHtml(text: string | undefined | null): string {
  * @param yatra Yatra to display
  * @returns HTML string
  */
-export function getYatraWebviewContent(yatra: any): string {
+export function getYatraWebviewContent(yatra: YatraWebviewData): string {
   return `<!DOCTYPE html>
 <html>
 <head>
@@ -476,7 +489,7 @@ export function getYatraWebviewContent(yatra: any): string {
     ${
       yatra.checkpoints.length > 0
         ? yatra.checkpoints
-            .map((cp: any) => `<div class="checkpoint">${escapeHtml(cp.message || cp.id)}</div>`)
+            .map(cp => `<div class="checkpoint">${escapeHtml(cp.message || cp.id)}</div>`)
             .join('')
         : '<p>No checkpoints yet. Create your first with Ctrl+Shift+P → "Tridishti: Create Sutra"</p>'
     }
@@ -487,7 +500,7 @@ export function getYatraWebviewContent(yatra: any): string {
     ${
       yatra.milestones.length > 0
         ? yatra.milestones
-            .map((m: any) => `<div class="milestone">${escapeHtml(m.name)} - ${escapeHtml(m.status)}</div>`)
+            .map(m => `<div class="milestone">${escapeHtml(m.name)} - ${escapeHtml(m.status)}</div>`)
             .join('')
         : '<p>No milestones yet. Create your first with Ctrl+Shift+P → "Tridishti: Create Karma Phala Milestone"</p>'
     }
@@ -498,7 +511,7 @@ export function getYatraWebviewContent(yatra: any): string {
     ${
       yatra.dharmaAlerts.length > 0
         ? yatra.dharmaAlerts
-            .map((a: any) => `<div class="alert">${escapeHtml(a.reason)}: ${escapeHtml(a.suggestion || '')}</div>`)
+            .map(a => `<div class="alert">${escapeHtml(a.reason)}: ${escapeHtml(a.suggestion || '')}</div>`)
             .join('')
         : '<p>No scope drift detected. Your dharma is aligned! 🕉️</p>'
     }
@@ -526,7 +539,7 @@ export function getYatraWebviewContent(yatra: any): string {
  * @param sankata Dharma sankata alert
  * @returns HTML string
  */
-export function getDharmaAlertWebviewContent(sankata: any): string {
+export function getDharmaAlertWebviewContent(sankata: DharmaSankataWebviewData): string {
   return `<!DOCTYPE html>
 <html>
 <head>
@@ -588,7 +601,7 @@ export function getDharmaAlertWebviewContent(sankata: any): string {
  * @param health Health status
  * @returns HTML string
  */
-export function getDrishtiWebviewContent(metrics: any, health: any): string {
+export function getDrishtiWebviewContent(metrics: MetricsWebviewData, health: HealthWebviewData): string {
   const healthColors: Record<string, string> = {
     healthy: '#4CAF50',
     degraded: '#FF9800',
@@ -876,7 +889,7 @@ export function getDrishtiWebviewContent(metrics: any, health: any): string {
       metrics.recentActivity.length > 0
         ? metrics.recentActivity
             .map(
-              (event: any) =>
+              event =>
                 `<div class="activity-item">
             <span class="activity-icon">${getEventIcon(event.type)}</span>
             <span class="activity-type">${formatEventType(event.type)}</span>
@@ -901,7 +914,7 @@ export function getDrishtiWebviewContent(metrics: any, health: any): string {
  * @param prompts Reflection prompts
  * @returns HTML string
  */
-export function getAtmaVicharaWebviewContent(reflection: any, prompts: string[]): string {
+export function getAtmaVicharaWebviewContent(reflection: ReflectionWebviewData, prompts: string[]): string {
   return `<!DOCTYPE html>
 <html>
 <head>

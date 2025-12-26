@@ -135,14 +135,14 @@ describe('UI Component Snapshots', () => {
       productivityScore: 82,
       recentActivity: [
         {
-          type: 'checkpoint',
+          type: 'checkpoint' as const,
           timestamp: Date.now() - 300000,
-          data: { id: 'cp1', timestamp: Date.now(), filesChanged: [] },
+          data: { id: 'cp1', timestamp: Date.now(), filesChanged: [], message: 'Test checkpoint' },
         },
         {
-          type: 'milestone',
+          type: 'milestone' as const,
           timestamp: Date.now() - 600000,
-          data: { id: 'kp1', milestoneId: 'm1', score: 85 },
+          data: { id: 'kp1', milestoneId: 'm1', timestamp: Date.now(), score: 85, duration: 60, filesModified: [] },
         },
       ],
     };
