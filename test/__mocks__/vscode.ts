@@ -43,6 +43,15 @@ const mockVSCode = {
       onDidDispose: jest.fn(),
       dispose: jest.fn(),
     })),
+    createStatusBarItem: jest.fn(() => ({
+      text: '',
+      tooltip: '',
+      command: '',
+      backgroundColor: undefined,
+      show: jest.fn(),
+      hide: jest.fn(),
+      dispose: jest.fn(),
+    })),
   },
   commands: {
     registerCommand: jest.fn(() => ({ dispose: jest.fn() })),
@@ -78,6 +87,12 @@ const mockVSCode = {
     Two: 2,
     Three: 3,
   },
+  StatusBarAlignment: {
+    Left: 1,
+    Right: 2,
+  },
+  ThemeColor: jest.fn((id: string) => ({ id })),
+  MarkdownString: jest.fn((value: string) => ({ value })),
 };
 
 export = mockVSCode;

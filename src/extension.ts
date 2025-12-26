@@ -19,6 +19,7 @@ import { SutraCheckpoints, ISutraCheckpointConfig } from './core/sutra-checkpoin
 import { KarmaPhala, IKarmaPhalaConfig } from './core/karma-phala';
 import { DharmaSankata, IDharmaSankataConfig } from './core/dharma-sankata';
 import { YatraManager, IYatraManagerConfig } from './core/yatra-manager';
+import { StatusBarIntegration, IStatusBarConfig } from './core/status-bar';
 import { JnanaCapture, IJnanaCaptureConfig } from './learning/jnana-capture';
 import { SmritiRecall } from './learning/smriti-recall';
 import { AtmaVichara, IAtmaVicharaConfig } from './reflection/atma-vichara';
@@ -130,9 +131,25 @@ export function activate(context: vscode.ExtensionContext): void {
 
   const drishtiDashboard = new DrishtiDashboard(drishtiDashboardConfig);
 
+  // Initialize status bar integration
+  const statusBarConfig: IStatusBarConfig = {
+    enabled: config.get<boolean>('enabled', true),
+    showDuration: true,
+    showCheckpoints: true,
+    updateIntervalMs: 60000, // Update every minute
+  };
+
+  const statusBar = new StatusBarIntegration(statusBarConfig);
+  statusBar.initialize();
+
   // Set up event subscriptions for dashboard
   eventEmitter.event(event => {
     drishtiDashboard.recordEvent(event);
+
+    // Update status bar on yatra events
+    if (event.type === 'yatra_start' || event.type === 'yatra_end') {
+      statusBar.updateYatra(yatraManager.getCurrentYatra());
+    }
   });
 
   // Register VS Code commands
@@ -354,6 +371,7 @@ export function activate(context: vscode.ExtensionContext): void {
       });
 
       const yatra = await yatraManager.startYatra(sankalpa);
+      statusBar.updateYatra(yatra);
       vscode.window.showInformationMessage(
         `New Yatra started! Sankalpa: ${yatra.sankalpa || 'Not set'} 🚀`
       );
@@ -385,6 +403,7 @@ export function activate(context: vscode.ExtensionContext): void {
       .then(() => {
         const currentYatra = yatraManager.getCurrentYatra();
         if (currentYatra) {
+          statusBar.updateYatra(currentYatra);
           vscode.window.showInformationMessage(
             `Previous yatra restored: ${currentYatra.sankalpa || 'Untitled session'}`
           );
@@ -406,7 +425,12 @@ export function activate(context: vscode.ExtensionContext): void {
     showDrishtiCommand,
     atmaVicharaCommand,
     startYatraCommand,
-    eventEmitter
+    eventEmitter,
+    {
+      dispose: () => {
+        statusBar.dispose();
+      },
+    }
   );
 
   // Set up configuration change listener
