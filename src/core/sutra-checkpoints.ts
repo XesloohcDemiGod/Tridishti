@@ -143,7 +143,7 @@ export class SutraCheckpoints {
       const result = execSync(`git commit -am "${sanitizedMessage}"`, { encoding: 'utf-8' });
       const match = result.match(/\[([a-f0-9]+)\]/);
       return match ? match[1] : undefined;
-    } catch (error) {
+    } catch {
       return undefined;
     }
   }
