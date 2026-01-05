@@ -233,7 +233,7 @@
     "@types/jest": "^30.0.0",
     "@types/node": "^24.10.2",
     "@types/vscode": "^1.80.0",
-    "@typescript-eslint/eslint-plugin": "^8.50.0",
+    "@typescript-eslint/eslint-plugin": "^8.50.1",
     "@typescript-eslint/parser": "^8.50.0",
     "@vscode/vsce": "^3.7.1",
     "eslint": "^9.39.2",
@@ -242,6 +242,6 @@
     "rimraf": "^6.1.2",
     "ts-jest": "^29.4.6",
     "typescript": "^5.0.0",
-    "typescript-eslint": "^8.49.0"
+    "typescript-eslint": "^8.51.0"
   }
 }
