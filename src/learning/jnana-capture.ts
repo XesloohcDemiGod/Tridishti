@@ -217,7 +217,7 @@ export class JnanaCapture {
       for (const jnana of jnanaArray) {
         this.capturedJnana.set(jnana.id, jnana);
       }
-    } catch (error) {
+    } catch {
       throw new Error('Failed to import jnana from JSON');
     }
   }

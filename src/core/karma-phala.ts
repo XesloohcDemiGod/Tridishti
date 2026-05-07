@@ -228,7 +228,7 @@ export class KarmaPhala {
         encoding: 'utf-8',
       });
       return sanitizedTagName;
-    } catch (error) {
+    } catch {
       return undefined;
     }
   }

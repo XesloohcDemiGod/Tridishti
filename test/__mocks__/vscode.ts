@@ -21,6 +21,12 @@ const mockVSCode = {
     textDocuments: [],
     onDidChangeTextDocument: jest.fn(),
     onDidSaveTextDocument: jest.fn(),
+    createFileSystemWatcher: jest.fn(() => ({
+      onDidCreate: jest.fn(),
+      onDidChange: jest.fn(),
+      onDidDelete: jest.fn(),
+      dispose: jest.fn(),
+    })),
   },
   window: {
     showInformationMessage: jest.fn().mockResolvedValue(undefined),
@@ -37,9 +43,19 @@ const mockVSCode = {
       onDidDispose: jest.fn(),
       dispose: jest.fn(),
     })),
+    createStatusBarItem: jest.fn(() => ({
+      text: '',
+      tooltip: '',
+      command: '',
+      backgroundColor: undefined,
+      show: jest.fn(),
+      hide: jest.fn(),
+      dispose: jest.fn(),
+    })),
   },
   commands: {
     registerCommand: jest.fn(() => ({ dispose: jest.fn() })),
+    executeCommand: jest.fn().mockResolvedValue(undefined),
   },
   EventEmitter: jest.fn(() => {
     const listeners: ((event: any) => void)[] = [];
@@ -62,6 +78,21 @@ const mockVSCode = {
     get: jest.fn(),
     update: jest.fn(),
   })),
+  Uri: {
+    file: jest.fn((path: string) => ({ fsPath: path, scheme: 'file' })),
+    parse: jest.fn((path: string) => ({ fsPath: path, scheme: 'file' })),
+  },
+  ViewColumn: {
+    One: 1,
+    Two: 2,
+    Three: 3,
+  },
+  StatusBarAlignment: {
+    Left: 1,
+    Right: 2,
+  },
+  ThemeColor: jest.fn((id: string) => ({ id })),
+  MarkdownString: jest.fn((value: string) => ({ value })),
 };
 
 export = mockVSCode;
